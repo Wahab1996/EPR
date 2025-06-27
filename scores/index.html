@@ -4,41 +4,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Coming Soon</title>
-  <style>
-    body {
-      margin: 0;
-      background-color: #121212;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .card {
-      background: white;
-      color: black;
-      padding: 2em;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    }
-    .card h1 {
-      margin-top: 0;
-      font-size: 1.8em;
-    }
-    .card p {
-      margin-bottom: 0.5em;
-    }
-  </style>
+  <title>Medical Scores</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <script src="../assets/js/theme-toggle.js" defer></script>
 </head>
 <body>
-  <div class="card">
-    <h1>🚧 Coming Soon – Stay Tuned!</h1>
-    <p>This section is under development.</p>
-    <p>Powerful and practical emergency resources are on the way to support<br>your clinical decisions.</p>
-    <p>⏳ ترقبوا بإذن الله 🚀</p>
-  </div>
+  <header>
+    <h1>📊 Medical Scores</h1>
+    <button id="theme-toggle">Toggle Theme</button>
+  </header>
+  <main>
+    <section class="cards">
+      <a href="ascvd.html" class="card">ASCVD Risk Calculator</a>
+      <a href="phq9.html" class="card">PHQ-9 (Depression)</a>
+      <a href="gad7.html" class="card">GAD-7 (Anxiety)</a>
+      <a href="centor.html" class="card">Centor Score (Strep Throat)</a>
+      <a href="frail.html" class="card">FRAIL Scale</a>
+      <a href="cha2ds2.html" class="card">CHA2DS2-VASc</a>
+      <a href="hasbled.html" class="card">HAS-BLED</a>
+      <a href="frax.html" class="card">FRAX (Osteoporosis)</a>
+      <a href="minicog.html" class="card">Mini-Cog Test</a>
+      <a href="epworth.html" class="card">Epworth Sleepiness Scale</a>
+    </section>
+  </main>
+  <footer>
+    <p>© 2025 Dr. Abdulwahab Abdulmannan AlSheikh – All rights reserved</p>
+    <p>Developed with the assistance of AI (ChatGPT)</p>
+  </footer>
 </body>
 </html>

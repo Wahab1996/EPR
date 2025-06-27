@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PHQ-9 Depression Score</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <script src="../assets/js/theme-toggle.js" defer></script>
+  <style>
+    main {
+      padding: 2em;
+      max-width: 800px;
+      margin: auto;
+    }
+    .question {
+      margin-bottom: 1.5em;
+    }
+    .question label {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+    .result {
+      margin-top: 2em;
+      padding: 1em;
+      background: #e0e0e0;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🧠 PHQ-9 Depression Score</h1>
+    <button id="theme-toggle">Toggle Theme</button>
+  </header>
+  <main>
+    <form id="phq9-form">
+      <div class="question">
+        <label>1. Little interest or pleasure in doing things</label>
+        <select name="q1">
+          <option value="0">Not at all</option>
+          <option value="1">Several days</option>
+          <option value="2">More than half the days</option>
+          <option value="3">Nearly every day</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>2. Feeling down, depressed, or hopeless</label>
+        <select name="q2">
+          <option value="0">Not at all</option>
+          <option value="1">Several days</option>
+          <option value="2">More than half the days</option>
+          <option value="3">Nearly every day</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>3. Trouble falling or staying asleep, or sleeping too much</label>
+        <select name="q3">
+          <option value="0">Not at all</option>
+          <option value="1">Several days</option>
+          <option value="2">More than half the days</option>
+          <option value="3">Nearly every day</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>4. Feeling tired or having little energy</label>
+        <select name="q4">
+          <option value="0">Not at all</option>
+          <option value="1">Several days</option>
+          <option value="2">More than half the days</option>
+          <option value="3">Nearly every day</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>5. Poor appetite or overeating</label>
+        <select name="q5">
+          <option value="0">Not at all</option>
+          <option value="1">Several days</option>
+          <option value="2">More than half the days</option>
+          <option value="3">Nearly every day</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>6. Feeling bad about yourself — or that you are a failure</label>
+        <select name="q6">
+          <option value="0">Not at all</option>
+          <option value="1">Several days</option>
+          <option value="2">More than half the days</option>
+          <option value="3">Nearly every day</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>7. Trouble concentrating on things</label>
+        <select name="q7">
+          <option value="0">Not at all</option>
+          <option value="1">Several days</option>
+          <option value="2">More than half the days</option>
+          <option value="3">Nearly every day</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>8. Moving or speaking so slowly that others notice</label>
+        <select name="q8">
+          <option value="0">Not at all</option>
+          <option value="1">Several days</option>
+          <option value="2">More than half the days</option>
+          <option value="3">Nearly every day</option>
+        </select>
+      </div>
+      <div class="question">
+        <label>9. Thoughts that you would be better off dead or hurting yourself</label>
+        <select name="q9">
+          <option value="0">Not at all</option>
+          <option value="1">Several days</option>
+          <option value="2">More than half the days</option>
+          <option value="3">Nearly every day</option>
+        </select>
+      </div>
+      <button type="button" onclick="calculatePHQ9()">Calculate Score</button>
+    </form>
+    <div id="result" class="result" style="display: none;"></div>
+  </main>
+  <footer>
+    <p>© 2025 Dr. Abdulwahab Abdulmannan AlSheikh – All rights reserved</p>
+  </footer>
+
+  <script>
+    function calculatePHQ9() {
+      const form = document.getElementById('phq9-form');
+      const data = new FormData(form);
+      let score = 0;
+      for (let pair of data.entries()) {
+        score += parseInt(pair[1]);
+      }
+
+      let interpretation = "";
+      if (score <= 4) interpretation = "Minimal or no depression";
+      else if (score <= 9) interpretation = "Mild depression";
+      else if (score <= 14) interpretation = "Moderate depression";
+      else if (score <= 19) interpretation = "Moderately severe depression";
+      else interpretation = "Severe depression";
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `<strong>Total Score: ${score}</strong><br>${interpretation}`;
+      resultDiv.style.display = "block";
+    }
+  </script>
+</body>
+</html>
