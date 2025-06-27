@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PHQ-9 Depression Score</title>
+  <title>مقياس PHQ-9 للاكتئاب</title>
   <link rel="stylesheet" href="../assets/css/style.css" />
   <script src="../assets/js/theme-toggle.js" defer></script>
   <style>
@@ -23,105 +23,101 @@
     .result {
       margin-top: 2em;
       padding: 1em;
-      background: #e0e0e0;
+      background: #f0f0f0;
+      color: #000;
       border-radius: 10px;
+    }
+    body.dark-mode .result {
+      background: #333;
+      color: #fff;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>🧠 PHQ-9 Depression Score</h1>
-    <button id="theme-toggle">Toggle Theme</button>
+    <h1>🧠 مقياس PHQ-9 للاكتئاب</h1>
+    <button id="theme-toggle">تبديل الوضع</button>
   </header>
   <main>
     <form id="phq9-form">
-      <div class="question">
-        <label>1. Little interest or pleasure in doing things</label>
+      <div class="question"><label>1. قلة الاهتمام أو الاستمتاع بالقيام بالأشياء</label>
         <select name="q1">
-          <option value="0">Not at all</option>
-          <option value="1">Several days</option>
-          <option value="2">More than half the days</option>
-          <option value="3">Nearly every day</option>
+          <option value="0">أبدًا</option>
+          <option value="1">عدة أيام</option>
+          <option value="2">أكثر من نصف الأيام</option>
+          <option value="3">تقريبًا كل يوم</option>
         </select>
       </div>
-      <div class="question">
-        <label>2. Feeling down, depressed, or hopeless</label>
+      <div class="question"><label>2. الشعور بالحزن أو الاكتئاب أو اليأس</label>
         <select name="q2">
-          <option value="0">Not at all</option>
-          <option value="1">Several days</option>
-          <option value="2">More than half the days</option>
-          <option value="3">Nearly every day</option>
+          <option value="0">أبدًا</option>
+          <option value="1">عدة أيام</option>
+          <option value="2">أكثر من نصف الأيام</option>
+          <option value="3">تقريبًا كل يوم</option>
         </select>
       </div>
-      <div class="question">
-        <label>3. Trouble falling or staying asleep, or sleeping too much</label>
+      <div class="question"><label>3. صعوبة في النوم أو النوم كثيرًا</label>
         <select name="q3">
-          <option value="0">Not at all</option>
-          <option value="1">Several days</option>
-          <option value="2">More than half the days</option>
-          <option value="3">Nearly every day</option>
+          <option value="0">أبدًا</option>
+          <option value="1">عدة أيام</option>
+          <option value="2">أكثر من نصف الأيام</option>
+          <option value="3">تقريبًا كل يوم</option>
         </select>
       </div>
-      <div class="question">
-        <label>4. Feeling tired or having little energy</label>
+      <div class="question"><label>4. الشعور بالتعب أو قلة الطاقة</label>
         <select name="q4">
-          <option value="0">Not at all</option>
-          <option value="1">Several days</option>
-          <option value="2">More than half the days</option>
-          <option value="3">Nearly every day</option>
+          <option value="0">أبدًا</option>
+          <option value="1">عدة أيام</option>
+          <option value="2">أكثر من نصف الأيام</option>
+          <option value="3">تقريبًا كل يوم</option>
         </select>
       </div>
-      <div class="question">
-        <label>5. Poor appetite or overeating</label>
+      <div class="question"><label>5. فقدان الشهية أو الأكل الزائد</label>
         <select name="q5">
-          <option value="0">Not at all</option>
-          <option value="1">Several days</option>
-          <option value="2">More than half the days</option>
-          <option value="3">Nearly every day</option>
+          <option value="0">أبدًا</option>
+          <option value="1">عدة أيام</option>
+          <option value="2">أكثر من نصف الأيام</option>
+          <option value="3">تقريبًا كل يوم</option>
         </select>
       </div>
-      <div class="question">
-        <label>6. Feeling bad about yourself — or that you are a failure</label>
+      <div class="question"><label>6. الشعور بسوء عن نفسك أو أنك فاشل</label>
         <select name="q6">
-          <option value="0">Not at all</option>
-          <option value="1">Several days</option>
-          <option value="2">More than half the days</option>
-          <option value="3">Nearly every day</option>
+          <option value="0">أبدًا</option>
+          <option value="1">عدة أيام</option>
+          <option value="2">أكثر من نصف الأيام</option>
+          <option value="3">تقريبًا كل يوم</option>
         </select>
       </div>
-      <div class="question">
-        <label>7. Trouble concentrating on things</label>
+      <div class="question"><label>7. صعوبة في التركيز</label>
         <select name="q7">
-          <option value="0">Not at all</option>
-          <option value="1">Several days</option>
-          <option value="2">More than half the days</option>
-          <option value="3">Nearly every day</option>
+          <option value="0">أبدًا</option>
+          <option value="1">عدة أيام</option>
+          <option value="2">أكثر من نصف الأيام</option>
+          <option value="3">تقريبًا كل يوم</option>
         </select>
       </div>
-      <div class="question">
-        <label>8. Moving or speaking so slowly that others notice</label>
+      <div class="question"><label>8. الحركة أو الكلام ببطء لدرجة ملاحظة الآخرين</label>
         <select name="q8">
-          <option value="0">Not at all</option>
-          <option value="1">Several days</option>
-          <option value="2">More than half the days</option>
-          <option value="3">Nearly every day</option>
+          <option value="0">أبدًا</option>
+          <option value="1">عدة أيام</option>
+          <option value="2">أكثر من نصف الأيام</option>
+          <option value="3">تقريبًا كل يوم</option>
         </select>
       </div>
-      <div class="question">
-        <label>9. Thoughts that you would be better off dead or hurting yourself</label>
+      <div class="question"><label>9. التفكير في أن الموت سيكون أفضل أو إيذاء النفس</label>
         <select name="q9">
-          <option value="0">Not at all</option>
-          <option value="1">Several days</option>
-          <option value="2">More than half the days</option>
-          <option value="3">Nearly every day</option>
+          <option value="0">أبدًا</option>
+          <option value="1">عدة أيام</option>
+          <option value="2">أكثر من نصف الأيام</option>
+          <option value="3">تقريبًا كل يوم</option>
         </select>
       </div>
-      <button type="button" onclick="calculatePHQ9()">Calculate Score</button>
+      <button type="button" onclick="calculatePHQ9()">احسب النتيجة</button>
     </form>
     <div id="result" class="result" style="display: none;"></div>
   </main>
   <footer>
-    <p>© 2025 Dr. Abdulwahab Abdulmannan AlSheikh – All rights reserved</p>
+    <p>© 2025 د. عبدالوهاب عبد المنان الشيخ – جميع الحقوق محفوظة</p>
   </footer>
 
   <script>
@@ -141,7 +137,7 @@
       else interpretation = "Severe depression";
 
       const resultDiv = document.getElementById('result');
-      resultDiv.innerHTML = `<strong>Total Score: ${score}</strong><br>${interpretation}`;
+      resultDiv.innerHTML = `<strong>📊 Total Score: ${score}</strong><br>${interpretation}`;
       resultDiv.style.display = "block";
     }
   </script>

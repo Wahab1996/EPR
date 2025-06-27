@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>مقياس Centor لالتهاب الحلق البكتيري</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <script src="../assets/js/theme-toggle.js" defer></script>
+  <style>
+    main {
+      padding: 2em;
+      max-width: 800px;
+      margin: auto;
+    }
+    .question {
+      margin-bottom: 1.5em;
+    }
+    .result {
+      margin-top: 2em;
+      padding: 1em;
+      background: #f0f0f0;
+      color: #000;
+      border-radius: 10px;
+    }
+    body.dark-mode .result {
+      background: #333;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📊 مقياس Centor لتقييم التهاب الحلق البكتيري</h1>
+    <button id="theme-toggle">تبديل الوضع</button>
+  </header>
+  <main>
+    <form id="centor-form">
+      <div class="question">
+        <label><input type="checkbox" name="fever" /> حمى (درجة حرارة > 38°C)</label>
+      </div>
+      <div class="question">
+        <label><input type="checkbox" name="no_cough" /> غياب السعال</label>
+      </div>
+      <div class="question">
+        <label><input type="checkbox" name="tender_nodes" /> تضخم أو ألم في العقد اللمفاوية العنقية الأمامية</label>
+      </div>
+      <div class="question">
+        <label><input type="checkbox" name="tonsillar_exudate" /> إفرازات على اللوزتين أو تورمهما</label>
+      </div>
+      <div class="question">
+        <label>العمر:</label><br>
+        <select name="age">
+          <option value="0">15-44 سنة</option>
+          <option value="1">3-14 سنة (+1)</option>
+          <option value="-1">45 سنة فأكثر (-1)</option>
+        </select>
+      </div>
+      <button type="button" onclick="calculateCentor()">احسب النتيجة</button>
+    </form>
+    <div id="result" class="result" style="display: none;"></div>
+  </main>
+  <footer>
+    <p>© 2025 د. عبدالوهاب عبد المنان الشيخ – جميع الحقوق محفوظة</p>
+  </footer>
+
+  <script>
+    function calculateCentor() {
+      const form = document.getElementById('centor-form');
+      const data = new FormData(form);
+      let score = 0;
+
+      if (data.has("fever")) score += 1;
+      if (data.has("no_cough")) score += 1;
+      if (data.has("tender_nodes")) score += 1;
+      if (data.has("tonsillar_exudate")) score += 1;
+      score += parseInt(data.get("age"));
+
+      let interpretation = "";
+      if (score <= 1) interpretation = "Low risk – No antibiotic or testing needed";
+      else if (score === 2) interpretation = "Moderate risk – Consider RADT or throat culture";
+      else if (score >= 3) interpretation = "High risk – Consider empirical antibiotics or testing";
+
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = `<strong>📊 Total Score: ${score}</strong><br>${interpretation}`;
+      resultDiv.style.display = "block";
+    }
+  </script>
+</body>
+</html>
