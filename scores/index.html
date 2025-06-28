@@ -1,99 +1,169 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>ASCVD Risk Calculator (JSON-based)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>📊 Medical Scores</title>
-  <link rel="stylesheet" href="../assets/css/style.css" />
-  <script src="../assets/js/theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <script src="../../assets/js/theme-toggle.js" defer></script>
   <style>
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
+      margin: 0;
       background-color: var(--bg-color, #f0f0f0);
       color: var(--text-color, #333);
-      transition: background-color 0.3s, color 0.3s;
+      padding: 2em;
     }
     header {
-      background-color: var(--header-bg, #004080);
+      background-color: #004080;
       color: white;
       padding: 1em;
       text-align: center;
-      position: relative;
     }
-    #theme-toggle {
-      position: absolute;
-      top: 1em;
-      right: 1em;
-      background-color: #fff;
-      color: #004080;
-      border: none;
-      padding: 0.5em 1em;
+    form {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 1.5em;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 1em;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.6em;
+      margin-top: 0.3em;
       border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 1.5em;
+      padding: 0.7em 1.5em;
+      background-color: #004080;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
       cursor: pointer;
     }
-    main {
-      padding: 2em;
-      text-align: center;
-    }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5em;
+    .result {
       margin-top: 2em;
-    }
-    .card {
-      background-color: var(--card-bg, #ffffff);
-      color: inherit;
+      background: #f0f0f0;
       padding: 1em;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 600;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      transition: transform 0.2s, background-color 0.3s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      background-color: var(--card-hover, #e0f0ff);
-    }
-    :root {
-      --bg-color: #f0f0f0;
-      --text-color: #333;
-      --header-bg: #004080;
-      --card-bg: #fff;
-      --card-hover: #e0f0ff;
-    }
-    .dark-mode {
-      --bg-color: #121212;
-      --text-color: #eee;
-      --header-bg: #1e1e1e;
-      --card-bg: #1e1e1e;
-      --card-hover: #2a2a2a;
+      border-radius: 10px;
+      font-size: 1.2em;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>📊 Medical Scores</h1>
-    <button id="theme-toggle">🌓</button>
+    <h1>🔢 ASCVD Risk Calculator (JSON-based)</h1>
   </header>
-  <main>
-    <p>Choose a medical score tool:</p>
-    <section class="cards">
-      <a href="ascvd_risk_with_json.html" class="card">ASCVD Risk Calculator</a>
-      <a href="phq9.html" class="card">PHQ-9 (Depression)</a>
-      <a href="gad7.html" class="card">GAD-7 (Anxiety)</a>
-      <a href="centor.html" class="card">Centor Score (Strep Throat)</a>
-      <a href="frail.html" class="card">FRAIL Scale</a>
-      <a href="cha2ds2.html" class="card">CHA₂DS₂-VASc</a>
-      <a href="hasbled.html" class="card">HAS-BLED</a>
-      <a href="frax.html" class="card">FRAX (Osteoporosis)</a>
-      <a href="minicog.html" class="card">Mini-Cog Test</a>
-      <a href="epworth.html" class="card">Epworth Sleepiness Scale</a>
-    </section>
-  </main>
-  <footer>
-    <p>© 2025 Dr. Abdulwahab Abdulmannan AlSheikh – All rights reserved</p>
-  </footer>
+
+  <form id="ascvd-form">
+    <label>Age:
+      <input type="number" name="age" required>
+    </label>
+    <label>Gender:
+      <select name="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+    </label>
+    <label>Race:
+      <select name="race">
+        <option value="white">White/Other</option>
+        <option value="black">African American</option>
+      </select>
+    </label>
+    <label>Total Cholesterol (mg/dL):
+      <input type="number" name="tc" required>
+    </label>
+    <label>HDL Cholesterol (mg/dL):
+      <input type="number" name="hdl" required>
+    </label>
+    <label>Systolic BP:
+      <input type="number" name="sbp" required>
+    </label>
+    <label>Treated for BP?
+      <select name="bp_treated">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+    </label>
+    <label>Diabetic?
+      <select name="diabetes">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+    </label>
+    <label>Smoker?
+      <select name="smoker">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+    </label>
+    <button type="button" onclick="calculateRisk()">Calculate Risk</button>
+    <div class="result" id="result" style="display: none;"></div>
+  </form>
+
+  <script>
+    let coefficients = null;
+
+    fetch('ascvd_coefficients.json')
+      .then(res => res.json())
+      .then(data => { coefficients = data; });
+
+    function calculateRisk() {
+      const form = document.getElementById('ascvd-form');
+      const data = new FormData(form);
+      const age = Number(data.get("age"));
+      const gender = data.get("gender");
+      const race = data.get("race");
+      const tc = Number(data.get("tc"));
+      const hdl = Number(data.get("hdl"));
+      const sbp = Number(data.get("sbp"));
+      const bp_treated = data.get("bp_treated") === "yes" ? 1 : 0;
+      const smoker = data.get("smoker") === "yes" ? 1 : 0;
+      const diabetes = data.get("diabetes") === "yes" ? 1 : 0;
+
+      if (!coefficients) {
+        alert("Still loading data. Try again in a few seconds.");
+        return;
+      }
+
+      const group = `${race}_${gender}`;
+      const c = coefficients[group];
+      if (!c) {
+        alert("Unsupported group.");
+        return;
+      }
+
+      const ln_age = Math.log(age);
+      const ln_tc = Math.log(tc);
+      const ln_hdl = Math.log(hdl);
+      const ln_sbp = Math.log(sbp);
+
+      const sum = ln_age * c.ln_age +
+                  ln_tc * c.ln_tc +
+                  ln_hdl * c.ln_hdl +
+                  ln_age * ln_tc * c.ln_age_ln_tc +
+                  ln_age * ln_hdl * c.ln_age_ln_hdl +
+                  ln_sbp * (bp_treated ? c.ln_sbp_treated : c.ln_sbp_untreated) +
+                  smoker * c.smoker +
+                  ln_age * smoker * c.ln_age_smoker +
+                  diabetes * c.diabetes;
+
+      const risk = 1 - Math.pow(c.baseline_survival, Math.exp(sum - c.mean));
+
+      const result = document.getElementById('result');
+      result.innerHTML = `Estimated 10-Year ASCVD Risk: <strong>${(risk * 100).toFixed(1)}%</strong>`;
+      result.style.display = "block";
+    }
+  </script>
 </body>
 </html>
