@@ -1,0 +1,36 @@
+{
+  "groups": {
+    "white_male": {
+      "baseline_survival": 0.9144,
+      "mean_x": 61.18,
+      "coefficients": {
+        "ln_age": 12.344,
+        "ln_total_chol": 11.853,
+        "ln_age_total_chol": -2.664,
+        "ln_hdl": -7.99,
+        "ln_age_hdl": 1.769,
+        "ln_sbp_treated": 1.797,
+        "ln_sbp_untreated": 1.764,
+        "smoker": 7.837,
+        "ln_age_smoker": -1.795,
+        "diabetes": 0.658
+      }
+    },
+    "white_female": {
+      "baseline_survival": 0.9665,
+      "mean_x": -29.18,
+      "coefficients": {
+        "ln_age": -29.799,
+        "ln_total_chol": 13.54,
+        "ln_age_total_chol": -3.114,
+        "ln_hdl": -13.578,
+        "ln_age_hdl": 3.149,
+        "ln_sbp_treated": 2.019,
+        "ln_sbp_untreated": 1.957,
+        "smoker": 7.574,
+        "ln_age_smoker": -1.665,
+        "diabetes": 0.661
+      }
+    }
+  }
+}

@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ASCVD Risk Calculator</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <script src="../assets/js/theme-toggle.js" defer></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--text);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark-mode {
+      --background: #121212;
+      --text: #f1f1f1;
+    }
+
+    body:not(.dark-mode) {
+      --background: #f9f9f9;
+      --text: #000000;
+    }
+
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 1em;
+      text-align: center;
+      position: relative;
+    }
+
+    #theme-toggle {
+      position: absolute;
+      top: 1em;
+      left: 1em;
+      padding: 0.4em 0.8em;
+      border: none;
+      border-radius: 5px;
+      background-color: #ffffff33;
+      color: white;
+      cursor: pointer;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 2em auto;
+      padding: 1em;
+      background-color: var(--card-bg, #ffffff);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    .form-group {
+      margin-bottom: 1em;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.5em;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .result {
+      margin-top: 2em;
+      padding: 1em;
+      background: #f0f0f0;
+      color: #000;
+      border-radius: 10px;
+      direction: ltr;
+      text-align: left;
+    }
+
+    body.dark-mode .result {
+      background: #333;
+      color: #fff;
+    }
+
+    button {
+      background-color: #004080;
+      color: white;
+      padding: 0.7em 1.5em;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+    }
+
+    footer {
+      margin-top: 3em;
+      text-align: center;
+      font-size: 0.8em;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🫀 ASCVD Risk Calculator</h1>
+    <button id="theme-toggle">🌓</button>
+  </header>
+
+  <main>
+    <form id="ascvd-form">
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" required />
+      </div>
+      <div class="form-group">
+        <label for="gender">Sex</label>
+        <select id="gender" name="gender" required>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="race">Race</label>
+        <select id="race" name="race" required>
+          <option value="white">White</option>
+          <option value="african_american">African American</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="total_chol">Total Cholesterol (mg/dL)</label>
+        <input type="number" id="total_chol" name="total_chol" required />
+      </div>
+      <div class="form-group">
+        <label for="hdl">HDL Cholesterol (mg/dL)</label>
+        <input type="number" id="hdl" name="hdl" required />
+      </div>
+      <div class="form-group">
+        <label for="sbp">Systolic Blood Pressure (mmHg)</label>
+        <input type="number" id="sbp" name="sbp" required />
+      </div>
+      <div class="form-group">
+        <label for="bp_treated">On BP Treatment?</label>
+        <select id="bp_treated" name="bp_treated" required>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="diabetes">Diabetes?</label>
+        <select id="diabetes" name="diabetes" required>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="smoker">Smoker?</label>
+        <select id="smoker" name="smoker" required>
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+      <button type="button" onclick="calculateASCVD()">Calculate Risk</button>
+    </form>
+
+    <div id="result" class="result" style="display:none;"></div>
+  </main>
+
+  <footer>
+    © 2025 Dr. Abdulwahab Abdulmannan AlSheikh – All rights reserved
+  </footer>
+
+  <script>
+    async function calculateASCVD() {
+      const form = document.getElementById('ascvd-form');
+      const data = new FormData(form);
+      const values = Object.fromEntries(data.entries());
+
+      values.age = parseFloat(values.age);
+      values.total_chol = parseFloat(values.total_chol);
+      values.hdl = parseFloat(values.hdl);
+      values.sbp = parseFloat(values.sbp);
+      values.bp_treated = values.bp_treated === "true";
+      values.diabetes = values.diabetes === "true";
+      values.smoker = values.smoker === "true";
+
+      const response = await fetch('../scores/ascvd_coefficients.json');
+      const coefficients = await response.json();
+
+      const key = `${values.gender}_${values.race}`;
+      const coeff = coefficients[key];
+
+      if (!coeff) {
+        document.getElementById('result').innerText = "Unsupported combination.";
+        document.getElementById('result').style.display = "block";
+        return;
+      }
+
+      const ln_age = Math.log(values.age);
+      const ln_total_chol = Math.log(values.total_chol);
+      const ln_hdl = Math.log(values.hdl);
+      const ln_sbp = Math.log(values.sbp);
+
+      let sum = coeff.baseline;
+
+      sum += coeff.ln_age * ln_age;
+      sum += coeff.ln_total_chol * ln_total_chol;
+      sum += coeff.ln_hdl * ln_hdl;
+      sum += (values.bp_treated ? coeff.treated_sbp : coeff.untreated_sbp) * ln_sbp;
+      sum += values.smoker ? coeff.smoker : 0;
+      sum += values.diabetes ? coeff.diabetes : 0;
+
+      const risk = 1 - Math.pow(coeff.mean, Math.exp(sum - coeff.mean_ln));
+
+      document.getElementById('result').innerHTML = `<strong>Estimated 10-Year ASCVD Risk:</strong> ${(risk * 100).toFixed(1)}%`;
+      document.getElementById('result').style.display = "block";
+    }
+  </script>
+</body>
+</html>
