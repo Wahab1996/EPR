@@ -70,6 +70,15 @@ tr:hover {
 td {
   border-radius: 4px;
 }
+
+.print-footer {
+  display: none;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-size: 0.9em;
+}
+
 @media print {
   body {
     background: white;
@@ -81,6 +90,9 @@ td {
   }
   button, .options {
     display: none;
+  }
+  .print-footer {
+    display: block;
   }
 }
 </style>
@@ -107,6 +119,10 @@ td {
 
   <button onclick="window.print()">Print Schedule</button>
 
+  <div class="print-footer">
+    <p>Doctor name: _____________________</p>
+    <p>Signature: _______________________</p>
+  </div>
 </div>
 
 <script>
