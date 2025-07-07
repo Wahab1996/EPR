@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tetanus Prophylaxis Calculator</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fa;
+  margin: 0;
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+  color: #006699;
+}
+form {
+  max-width: 600px;
+  margin: auto;
+}
+label {
+  display: block;
+  margin-top: 10px;
+}
+select, input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+button {
+  margin-top: 20px;
+  padding: 10px;
+  width: 100%;
+  background-color: #006699;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.result {
+  margin-top: 20px;
+  padding: 10px;
+  border-left: 4px solid;
+}
+.safe {
+  background: #e6ffe6;
+  border-color: #33cc33;
+}
+.warning {
+  background: #fff9e6;
+  border-color: #ffcc00;
+}
+.danger {
+  background: #ffe6e6;
+  border-color: #cc0000;
+}
+</style>
+</head>
+<body>
+
+<h1>Tetanus Prophylaxis for Wounds</h1>
+
+<form>
+  <label>Type of Wound:</label>
+  <select id="woundType">
+    <option value="clean">Clean & minor</option>
+    <option value="major">Major or contaminated</option>
+  </select>
+
+  <label>Last Tetanus-containing vaccine (Td/Tdap):</label>
+  <select id="lastVaccine">
+    <option value="within5">Within 5 years</option>
+    <option value="5to10">5–10 years ago</option>
+    <option value="over10">Over 10 years ago or unknown</option>
+    <option value="never">Never vaccinated</option>
+  </select>
+
+  <button type="button" onclick="calculateTetanus()">Check Recommendation</button>
+</form>
+
+<div id="result" class="result" style="display:none;"></div>
+
+<script>
+function calculateTetanus() {
+  const wound = document.getElementById("woundType").value;
+  const last = document.getElementById("lastVaccine").value;
+
+  let recommendation = "";
+  let risk = "";
+
+  if (last === "never") {
+    recommendation = "✅ Give Td/Tdap + TIG (Tetanus immune globulin).";
+    risk = "danger";
+  } else if (wound === "clean") {
+    if (last === "within5") {
+      recommendation = "🟢 No Td needed.";
+      risk = "safe";
+    } else if (last === "5to10") {
+      recommendation = "🟢 No Td needed.";
+      risk = "safe";
+    } else {
+      recommendation = "🟡 Give Td/Tdap only.";
+      risk = "warning";
+    }
+  } else if (wound === "major") {
+    if (last === "within5") {
+      recommendation = "🟢 No Td or TIG needed.";
+      risk = "safe";
+    } else if (last === "5to10") {
+      recommendation = "🟡 Give Td/Tdap only.";
+      risk = "warning";
+    } else {
+      recommendation = "🔴 Give Td/Tdap + TIG.";
+      risk = "danger";
+    }
+  }
+
+  const resultDiv = document.getElementById("result");
+  resultDiv.style.display = "block";
+  resultDiv.className = "result " + risk;
+  resultDiv.innerHTML = `<strong>Recommendation:</strong> ${recommendation}`;
+}
+</script>
+
+</body>
+</html>
