@@ -1,126 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tetanus Prophylaxis Calculator</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>📊 Medical Calculators</title>
+<link rel="stylesheet" href="../assets/css/style.css" />
+<script src="../assets/js/theme-toggle.js" defer></script>
 <style>
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f7fa;
   margin: 0;
-  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-color, #f0f0f0);
+  color: var(--text-color, #333);
+  transition: background-color 0.3s, color 0.3s;
 }
-h1 {
-  text-align: center;
-  color: #006699;
-}
-form {
-  max-width: 600px;
-  margin: auto;
-}
-label {
-  display: block;
-  margin-top: 10px;
-}
-select, input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-}
-button {
-  margin-top: 20px;
-  padding: 10px;
-  width: 100%;
-  background-color: #006699;
+header {
+  background-color: var(--header-bg, #004080);
   color: white;
+  padding: 1em;
+  text-align: center;
+  position: relative;
+}
+#theme-toggle {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  background-color: #fff;
+  color: #004080;
   border: none;
+  padding: 0.5em 1em;
+  border-radius: 5px;
   cursor: pointer;
 }
-.result {
-  margin-top: 20px;
-  padding: 10px;
-  border-left: 4px solid;
+main {
+  padding: 2em;
+  text-align: center;
 }
-.safe {
-  background: #e6ffe6;
-  border-color: #33cc33;
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5em;
+  margin-top: 2em;
 }
-.warning {
-  background: #fff9e6;
-  border-color: #ffcc00;
+.card {
+  background-color: var(--card-bg, #ffffff);
+  color: inherit;
+  padding: 1em;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  transition: transform 0.2s, background-color 0.3s;
 }
-.danger {
-  background: #ffe6e6;
-  border-color: #cc0000;
+.card:hover {
+  transform: translateY(-5px);
+  background-color: var(--card-hover, #e0f0ff);
+}
+:root {
+  --bg-color: #f0f0f0;
+  --text-color: #333;
+  --header-bg: #004080;
+  --card-bg: #fff;
+  --card-hover: #e0f0ff;
+}
+.dark-mode {
+  --bg-color: #121212;
+  --text-color: #eee;
+  --header-bg: #1e1e1e;
+  --card-bg: #1e1e1e;
+  --card-hover: #2a2a2a;
 }
 </style>
 </head>
 <body>
-
-<h1>Tetanus Prophylaxis for Wounds</h1>
-
-<form>
-  <label>Type of Wound:</label>
-  <select id="woundType">
-    <option value="clean">Clean & minor</option>
-    <option value="major">Major or contaminated</option>
-  </select>
-
-  <label>Last Tetanus-containing vaccine (Td/Tdap):</label>
-  <select id="lastVaccine">
-    <option value="within5">Within 5 years</option>
-    <option value="5to10">5–10 years ago</option>
-    <option value="over10">Over 10 years ago or unknown</option>
-    <option value="never">Never vaccinated</option>
-  </select>
-
-  <button type="button" onclick="calculateTetanus()">Check Recommendation</button>
-</form>
-
-<div id="result" class="result" style="display:none;"></div>
-
-<script>
-function calculateTetanus() {
-  const wound = document.getElementById("woundType").value;
-  const last = document.getElementById("lastVaccine").value;
-
-  let recommendation = "";
-  let risk = "";
-
-  if (last === "never") {
-    recommendation = "✅ Give Td/Tdap + TIG (Tetanus immune globulin).";
-    risk = "danger";
-  } else if (wound === "clean") {
-    if (last === "within5") {
-      recommendation = "🟢 No Td needed.";
-      risk = "safe";
-    } else if (last === "5to10") {
-      recommendation = "🟢 No Td needed.";
-      risk = "safe";
-    } else {
-      recommendation = "🟡 Give Td/Tdap only.";
-      risk = "warning";
-    }
-  } else if (wound === "major") {
-    if (last === "within5") {
-      recommendation = "🟢 No Td or TIG needed.";
-      risk = "safe";
-    } else if (last === "5to10") {
-      recommendation = "🟡 Give Td/Tdap only.";
-      risk = "warning";
-    } else {
-      recommendation = "🔴 Give Td/Tdap + TIG.";
-      risk = "danger";
-    }
-  }
-
-  const resultDiv = document.getElementById("result");
-  resultDiv.style.display = "block";
-  resultDiv.className = "result " + risk;
-  resultDiv.innerHTML = `<strong>Recommendation:</strong> ${recommendation}`;
-}
-</script>
-
+<header>
+  <h1>📊 Medical Calculators</h1>
+  <button id="theme-toggle">🌓</button>
+</header>
+<main>
+  <p>Choose a calculator:</p>
+  <section class="cards">
+    <a href="rabies.html" class="card">Anti-rabies Vaccine Calculator</a>
+    <a href="tetanus.html" class="card">Tetanus Prophylaxis Calculator</a>
+  </section>
+</main>
+<footer style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1a237e; color: white; text-align: center; padding: 10px 0; font-size: 0.8em;">
+© 2025 Dr. Abdulwahab Abdulmannan AlSheikh – All rights reserved
+</footer>
 </body>
 </html>
