@@ -90,10 +90,16 @@ tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-.print-footer {
-  display: none;
-  margin-top: 30px;
-  font-size: 0.9em;
+.signature {
+  margin: 20px auto 0;
+  max-width: 700px;
+  text-align: left;
+  font-size: 0.95em;
+  color: #555;
+}
+
+.signature p {
+  margin: 4px 0;
 }
 
 @media print {
@@ -103,9 +109,6 @@ tr:nth-child(even) {
   }
   button, .options {
     display: none;
-  }
-  .print-footer {
-    display: block;
   }
 }
 </style>
@@ -131,11 +134,11 @@ tr:nth-child(even) {
   <div class="result" id="result"></div>
 
   <button onclick="window.print()">Print Schedule</button>
+</div>
 
-  <div class="print-footer">
-    <p>Doctor name: _____________________</p>
-    <p>Signature: _______________________</p>
-  </div>
+<div class="signature">
+  <p><strong>Doctor name:</strong> _____________________</p>
+  <p><strong>Signature:</strong> _______________________</p>
 </div>
 
 <script>
