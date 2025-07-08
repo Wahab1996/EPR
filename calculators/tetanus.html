@@ -4,61 +4,93 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tetanus Prophylaxis Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f7fa;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f4f8;
   margin: 0;
   padding: 20px;
+  color: #333;
 }
+
 h1 {
   text-align: center;
-  color: #006699;
+  color: #0077b6;
+  margin-bottom: 20px;
 }
+
 form {
-  max-width: 600px;
+  max-width: 500px;
   margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
+
 label {
   display: block;
-  margin-top: 10px;
+  margin-top: 15px;
+  font-weight: 700;
 }
-select, input {
+
+select {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
   margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
+
 button {
   margin-top: 20px;
-  padding: 10px;
+  padding: 12px;
   width: 100%;
-  background-color: #006699;
+  background-color: #0077b6;
   color: white;
   border: none;
+  border-radius: 4px;
+  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
+
+button:hover {
+  background-color: #005f8e;
+}
+
 .result {
-  margin-top: 20px;
-  padding: 10px;
-  border-left: 4px solid;
+  max-width: 500px;
+  margin: 20px auto 0;
+  padding: 20px;
+  border-left: 6px solid;
+  border-radius: 4px;
+  font-size: 16px;
 }
+
 .safe {
-  background: #e6ffe6;
-  border-color: #33cc33;
+  background: #e8f5e9;
+  border-color: #43a047;
+  color: #2e7d32;
 }
+
 .warning {
-  background: #fff9e6;
-  border-color: #ffcc00;
+  background: #fffde7;
+  border-color: #fdd835;
+  color: #f9a825;
 }
+
 .danger {
-  background: #ffe6e6;
-  border-color: #cc0000;
+  background: #ffebee;
+  border-color: #e53935;
+  color: #b71c1c;
 }
 </style>
 </head>
 <body>
 
-<h1>Tetanus Prophylaxis for Wounds</h1>
+<h1>Tetanus Prophylaxis Calculator</h1>
 
 <form>
   <label>Type of Wound:</label>
@@ -89,28 +121,25 @@ function calculateTetanus() {
   let risk = "";
 
   if (last === "never") {
-    recommendation = "✅ Give Td/Tdap + TIG (Tetanus immune globulin).";
+    recommendation = "✅ Td/Tdap + TIG required.<br>💊 Consider antibiotics if the wound is heavily contaminated or shows signs of infection.";
     risk = "danger";
   } else if (wound === "clean") {
-    if (last === "within5") {
-      recommendation = "🟢 No Td needed.";
-      risk = "safe";
-    } else if (last === "5to10") {
-      recommendation = "🟢 No Td needed.";
+    if (last === "within5" || last === "5to10") {
+      recommendation = "🟢 No Td needed.<br>✅ No antibiotics indicated.";
       risk = "safe";
     } else {
-      recommendation = "🟡 Give Td/Tdap only.";
+      recommendation = "🟡 Td/Tdap recommended.<br>✅ No antibiotics indicated.";
       risk = "warning";
     }
   } else if (wound === "major") {
     if (last === "within5") {
-      recommendation = "🟢 No Td or TIG needed.";
+      recommendation = "🟢 No Td or TIG needed.<br>💊 Consider antibiotics if signs of infection.";
       risk = "safe";
     } else if (last === "5to10") {
-      recommendation = "🟡 Give Td/Tdap only.";
+      recommendation = "🟡 Td/Tdap recommended.<br>💊 Consider antibiotics if signs of infection.";
       risk = "warning";
     } else {
-      recommendation = "🔴 Give Td/Tdap + TIG.";
+      recommendation = "🔴 Td/Tdap + TIG required.<br>💊 Consider antibiotics if the wound is heavily contaminated or infected.";
       risk = "danger";
     }
   }
@@ -118,10 +147,9 @@ function calculateTetanus() {
   const resultDiv = document.getElementById("result");
   resultDiv.style.display = "block";
   resultDiv.className = "result " + risk;
-  resultDiv.innerHTML = `<strong>Recommendation:</strong> ${recommendation}`;
+  resultDiv.innerHTML = recommendation;
 }
 </script>
 
 </body>
 </html>
-
