@@ -2,25 +2,36 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>فاحص التطعيمات الوطني للأطفال – السعودية</title>
+<title>الجدول الوطني للتطعيمات - السعودية</title>
 <style>
-body {font-family: Arial; direction: rtl; padding: 20px; background-color: #f4f9ff; text-align: center;}
-.container {max-width: 500px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
-h1 {color: #004080;}
-label, input, button {font-size: 16px; margin: 10px 0;}
-button {padding: 8px 16px; background: #004080; color: #fff; border: none; cursor: pointer;}
-button:hover {background: #003366;}
-#result {margin-top: 20px; font-size: 18px; font-weight: bold; color: #006600;}
-.reference {margin-top: 40px; font-size: 14px; color: #555;}
+body {font-family: Arial; direction: rtl; padding: 20px;}
+table, th, td {border: 1px solid #ccc; border-collapse: collapse; padding: 8px;}
+th {background: #eef;}
+input, button {margin: 5px; padding: 6px;}
+#result {margin-top: 15px; font-weight: bold; color: green;}
 </style>
 </head>
 <body>
 
-<div class="container">
-<h1>فاحص التطعيمات الوطني للأطفال</h1>
+<h1>الجدول الوطني للتطعيمات للأطفال – السعودية</h1>
 
-<p>أدخل عمر الطفل بالشهور (للأعمار الصغيرة) أو بالسنوات (للأكبر):</p>
+<table>
+<tr><th>العمر</th><th>التطعيمات</th></tr>
+<tr><td>عند الولادة</td><td>BCG (الدرن) + HepB (الكبدي ب)</td></tr>
+<tr><td>شهرين</td><td>RV + DTaP + Hib + IPV + PCV + HepB</td></tr>
+<tr><td>4 أشهر</td><td>RV + DTaP + Hib + IPV + PCV</td></tr>
+<tr><td>6 أشهر</td><td>RV + DTaP + Hib + IPV + PCV + HepB</td></tr>
+<tr><td>9 أشهر</td><td>Measles + MCV4</td></tr>
+<tr><td>12 شهرًا</td><td>MMR + PCV + IPV + Hib + HepA</td></tr>
+<tr><td>18 شهرًا</td><td>DTaP + Hib + IPV + MMR + HepA + Varicella</td></tr>
+<tr><td>24 شهرًا</td><td>HepA (الجرعة الثانية)</td></tr>
+<tr><td>4–6 سنوات</td><td>DTaP + IPV + MMR + Varicella</td></tr>
+<tr><td>11 سنة</td><td>Tdap + MCV4 + HPV (للفتيات)</td></tr>
+<tr><td>12 سنة</td><td>HPV (الجرعة الثانية للفتيات)</td></tr>
+<tr><td>18 سنة</td><td>MCV4 (معززة)</td></tr>
+</table>
 
+<h2>🔍 تحقق حسب العمر (بالشهور أو السنوات)</h2>
 <label>العمر بالشهور:</label>
 <input type="number" id="months" placeholder="مثال: 12">
 <br>
@@ -28,15 +39,7 @@ button:hover {background: #003366;}
 <input type="number" id="years" placeholder="مثال: 4">
 <br>
 <button onclick="check()">تحقق</button>
-
 <div id="result"></div>
-
-<p class="reference">
-المصدر: <strong>وزارة الصحة السعودية – الجدول الوطني للتطعيمات (ديسمبر 2019)</strong><br>
-<a href="https://www.moh.gov.sa/en/HealthAwareness/EducationalContent/HealthTips/Documents/Immunization-Schedule.pdf" target="_blank">
-اضغط هنا لعرض الملف الرسمي</a>
-</p>
-</div>
 
 <script>
 function check(){
@@ -47,34 +50,38 @@ function check(){
 
   let a = NaN;
 
-  if(!isNaN(monthsInput) && monthsInput >= 0) {
+  if (!isNaN(monthsInput) && monthsInput >= 0) {
     a = monthsInput;
-  } else if(!isNaN(yearsInput) && yearsInput >= 0) {
+  } else if (!isNaN(yearsInput) && yearsInput >= 0) {
     a = yearsInput * 12;
   }
 
-  if(isNaN(a)) return;
+  if (isNaN(a)) return;
 
-  const vaccines = [];
+  let t = '';
+  if(a===0) t='BCG + HepB';
+  else if(a===2) t='RV + DTaP + Hib + IPV + PCV + HepB';
+  else if(a===4) t='RV + DTaP + Hib + IPV + PCV';
+  else if(a===6) t='RV + DTaP + Hib + IPV + PCV + HepB';
+  else if(a===9) t='Measles + MCV4';
+  else if(a===12) t='MMR + PCV + IPV + Hib + HepA';
+  else if(a===18) t='DTaP + Hib + IPV + MMR + HepA + Varicella';
+  else if(a===24) t='HepA (الجرعة الثانية)';
+  else if(a>=48 && a<=72) t='DTaP + IPV + MMR + Varicella';
+  else if(a>=132 && a<144) t='Tdap + MCV4 + HPV للفتيات';
+  else if(a>=144 && a<180) t='HPV للفتيات (الجرعة الثانية)';
+  else if(a>=216 && a<240) t='MCV4 معززة';
 
-  if(a === 0) vaccines.push("BCG", "HepB");
-  if(a === 2) vaccines.push("RV (الجرعة 1)", "DTaP (الجرعة 1)", "Hib (الجرعة 1)", "IPV (الجرعة 1)", "PCV (الجرعة 1)", "HepB (الجرعة 2)");
-  if(a === 4) vaccines.push("RV (الجرعة 2)", "DTaP (الجرعة 2)", "Hib (الجرعة 2)", "IPV (الجرعة 2)", "PCV (الجرعة 2)");
-  if(a === 6) vaccines.push("RV (الجرعة 3)", "DTaP (الجرعة 3)", "Hib (الجرعة 3)", "IPV (الجرعة 3)", "PCV (الجرعة 3)", "HepB (الجرعة 3)");
-  if(a === 9) vaccines.push("Measles", "MCV4");
-  if(a === 12) vaccines.push("MMR (الجرعة 1)", "PCV (الجرعة 4)", "IPV (الجرعة 4)", "Hib (الجرعة 4)", "HepA (الجرعة 1)");
-  if(a === 18) vaccines.push("DTaP (الجرعة 4)", "Hib (الجرعة 5)", "OPV (الجرعة 1)", "MMR (الجرعة 2)", "HepA (الجرعة 2)", "Varicella (الجرعة 1)");
-  if(a === 24) vaccines.push("HepA (الجرعة 3)");
-  if(a >= 48 && a <= 72) vaccines.push("DTaP (الجرعة 5)", "OPV (الجرعة 2)", "MMR (الجرعة 3)", "Varicella (الجرعة 2)");
-  if(a >= 132 && a < 144) vaccines.push("Tdap", "MCV4", "HPV (الجرعة 1 للفتيات)");
-  if(a >= 144 && a < 180) vaccines.push("HPV (الجرعة 2 للفتيات)");
-  if(a >= 216 && a < 240) vaccines.push("MCV4 (معززة)");
-
-  if(vaccines.length > 0) {
-    r.textContent = "🩺 التطعيمات المطلوبة: " + vaccines.join(" + ");
-  }
+  if(t) r.textContent='🩺 التطعيمات المطلوبة: ' + t;
 }
 </script>
+
+<p style="text-align:center; font-size:small; margin-top:30px; color:#555;">
+المصدر: <strong>وزارة الصحة السعودية – الجدول الوطني للتطعيمات (MOHVAC_EPI Vaccines Update, ديسمبر 2019)</strong><br>
+للمزيد، يمكن الرجوع إلى الملف الرسمي: 
+<a href="https://www.moh.gov.sa/en/HealthAwareness/EducationalContent/HealthTips/Documents/Immunization-Schedule.pdf" target="_blank">
+اضغط هنا لعرض الملف</a>.
+</p>
 
 </body>
 </html>
