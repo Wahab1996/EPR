@@ -40,21 +40,27 @@ function check(){
   const a = parseInt(document.getElementById('age').value);
   const r = document.getElementById('result');
   r.textContent = '';
+
   if(isNaN(a) || a < 0) return;
-  let t = '';
-  if(a===0) t='BCG + HepB';
-  else if(a===2) t='RV + DTaP + Hib + IPV + PCV + HepB';
-  else if(a===4) t='RV + DTaP + Hib + IPV + PCV';
-  else if(a===6) t='RV + DTaP + Hib + IPV + PCV + HepB';
-  else if(a===9) t='Measles + MCV4';
-  else if(a===12) t='MMR + PCV + IPV + Hib + HepA';
-  else if(a===18) t='DTaP + Hib + IPV + MMR + HepA + Varicella';
-  else if(a===24) t='HepA (الجرعة الثانية)';
-  else if(a>=48 && a<=72) t='DTaP + IPV + MMR + Varicella';
-  else if(a>=132 && a<144) t='Tdap + MCV4 + HPV للفتيات';
-  else if(a>=144 && a<180) t='HPV للفتيات (الجرعة الثانية)';
-  else if(a>=216 && a<240) t='MCV4 معززة';
-  if(t) r.textContent='🩺 التطعيمات المطلوبة: ' + t;
+
+  const vaccines = [];
+
+  if(a === 0) vaccines.push("BCG", "HepB");
+  if(a === 2) vaccines.push("RV", "DTaP", "Hib", "IPV", "PCV", "HepB");
+  if(a === 4) vaccines.push("RV", "DTaP", "Hib", "IPV", "PCV");
+  if(a === 6) vaccines.push("RV", "DTaP", "Hib", "IPV", "PCV", "HepB");
+  if(a === 9) vaccines.push("Measles", "MCV4");
+  if(a === 12) vaccines.push("MMR", "PCV", "IPV", "Hib", "HepA");
+  if(a === 18) vaccines.push("DTaP", "Hib", "IPV", "MMR", "HepA", "Varicella");
+  if(a === 24) vaccines.push("HepA");
+  if(a >= 48 && a <= 72) vaccines.push("DTaP", "IPV", "MMR", "Varicella");
+  if(a >= 132 && a < 144) vaccines.push("Tdap", "MCV4", "HPV (فقط للفتيات)");
+  if(a >= 144 && a < 180) vaccines.push("HPV (الجرعة الثانية للفتيات)");
+  if(a >= 216 && a < 240) vaccines.push("MCV4 (معززة)");
+
+  if(vaccines.length > 0) {
+    r.textContent = "🩺 التطعيمات المطلوبة: " + vaccines.join(" + ");
+  }
 }
 </script>
 
