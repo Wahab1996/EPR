@@ -19,10 +19,13 @@ button:hover {background: #003366;}
 <div class="container">
 <h1>فاحص التطعيمات الوطني للأطفال</h1>
 
-<p>أدخل عمر الطفل بالشهور أو السنوات (×12) لمعرفة التطعيمات المستحقة حسب الجدول الوطني.</p>
+<p>أدخل عمر الطفل بالشهور (للأعمار الصغيرة) أو بالسنوات (للأكبر):</p>
 
 <label>العمر بالشهور:</label>
-<input type="number" id="age" placeholder="مثال: 12">
+<input type="number" id="months" placeholder="مثال: 12">
+<br>
+<label>العمر بالسنوات:</label>
+<input type="number" id="years" placeholder="مثال: 4">
 <br>
 <button onclick="check()">تحقق</button>
 
@@ -37,25 +40,34 @@ button:hover {background: #003366;}
 
 <script>
 function check(){
-  const a = parseInt(document.getElementById('age').value);
+  const monthsInput = parseInt(document.getElementById('months').value);
+  const yearsInput = parseInt(document.getElementById('years').value);
   const r = document.getElementById('result');
   r.textContent = '';
 
-  if(isNaN(a) || a < 0) return;
+  let a = NaN;
+
+  if(!isNaN(monthsInput) && monthsInput >= 0) {
+    a = monthsInput;
+  } else if(!isNaN(yearsInput) && yearsInput >= 0) {
+    a = yearsInput * 12;
+  }
+
+  if(isNaN(a)) return;
 
   const vaccines = [];
 
   if(a === 0) vaccines.push("BCG", "HepB");
-  if(a === 2) vaccines.push("RV", "DTaP", "Hib", "IPV", "PCV", "HepB");
-  if(a === 4) vaccines.push("RV", "DTaP", "Hib", "IPV", "PCV");
-  if(a === 6) vaccines.push("RV", "DTaP", "Hib", "IPV", "PCV", "HepB");
+  if(a === 2) vaccines.push("RV (الجرعة 1)", "DTaP (الجرعة 1)", "Hib (الجرعة 1)", "IPV (الجرعة 1)", "PCV (الجرعة 1)", "HepB (الجرعة 2)");
+  if(a === 4) vaccines.push("RV (الجرعة 2)", "DTaP (الجرعة 2)", "Hib (الجرعة 2)", "IPV (الجرعة 2)", "PCV (الجرعة 2)");
+  if(a === 6) vaccines.push("RV (الجرعة 3)", "DTaP (الجرعة 3)", "Hib (الجرعة 3)", "IPV (الجرعة 3)", "PCV (الجرعة 3)", "HepB (الجرعة 3)");
   if(a === 9) vaccines.push("Measles", "MCV4");
-  if(a === 12) vaccines.push("MMR", "PCV", "IPV", "Hib", "HepA");
-  if(a === 18) vaccines.push("DTaP", "Hib", "IPV", "MMR", "HepA", "Varicella");
-  if(a === 24) vaccines.push("HepA");
-  if(a >= 48 && a <= 72) vaccines.push("DTaP", "IPV", "MMR", "Varicella");
-  if(a >= 132 && a < 144) vaccines.push("Tdap", "MCV4", "HPV (فقط للفتيات)");
-  if(a >= 144 && a < 180) vaccines.push("HPV (الجرعة الثانية للفتيات)");
+  if(a === 12) vaccines.push("MMR (الجرعة 1)", "PCV (الجرعة 4)", "IPV (الجرعة 4)", "Hib (الجرعة 4)", "HepA (الجرعة 1)");
+  if(a === 18) vaccines.push("DTaP (الجرعة 4)", "Hib (الجرعة 5)", "IPV (الجرعة 5)", "MMR (الجرعة 2)", "HepA (الجرعة 2)", "Varicella (الجرعة 1)");
+  if(a === 24) vaccines.push("HepA (الجرعة 3)");
+  if(a >= 48 && a <= 72) vaccines.push("DTaP (الجرعة 5)", "IPV (الجرعة 6)", "MMR (الجرعة 3)", "Varicella (الجرعة 2)");
+  if(a >= 132 && a < 144) vaccines.push("Tdap", "MCV4", "HPV (الجرعة 1 للفتيات)");
+  if(a >= 144 && a < 180) vaccines.push("HPV (الجرعة 2 للفتيات)");
   if(a >= 216 && a < 240) vaccines.push("MCV4 (معززة)");
 
   if(vaccines.length > 0) {
