@@ -6,161 +6,188 @@
 <title>Screening in Family Medicine - Saudi Arabia</title>
 <style>
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f7fa;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #eef2f7;
   color: #333;
   margin: 0;
-  padding: 20px;
+  padding: 0;
 }
 h1 {
   text-align: center;
-  color: #006699;
+  color: #004080;
+  margin: 20px 10px;
+  font-size: 1.8em;
+}
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
 }
 .card {
-  background: white;
-  margin: 10px auto;
+  background: #fff;
+  border-radius: 10px;
   padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  width: 90%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 .card:hover {
-  background: #e6f2ff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.card-title {
+  font-weight: bold;
+  font-size: 1.1em;
+  color: #004080;
+  margin-bottom: 10px;
 }
 .card-content {
   display: none;
-  margin-top: 10px;
   font-size: 0.95em;
+  color: #555;
+  margin-top: 5px;
 }
 .note {
   font-size: 0.8em;
-  color: gray;
-  margin-top: 5px;
+  color: #888;
+  margin-top: 8px;
+}
+.back-link {
+  display: block;
+  text-align: center;
+  margin: 30px 0 10px;
+  color: #004080;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+.back-link:hover {
+  text-decoration: underline;
 }
 </style>
 </head>
 <body>
 
-<h1>FM Screening Guidelines – Saudi Arabia</h1>
+<h1>Screening Guidelines – Saudi Arabia</h1>
+
+<div class="container">
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Breast Cancer</strong>
+  <div class="card-title">Breast Cancer</div>
   <div class="card-content">
-    <p>Women aged 40–74: Mammography every 1–2 years. Start earlier if family history of breast or ovarian cancer. Stop at life expectancy &lt;10 years.</p>
-    <p class="note">Sources — USPSTF 2024, MOH</p>
+    Women 40–74: Mammography every 1–2 years. Earlier if family history. Stop if life expectancy &lt;10 yrs.
+    <div class="note">USPSTF 2024, MOH</div>
   </div>
 </div>
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Cervical Cancer</strong>
+  <div class="card-title">Cervical Cancer</div>
   <div class="card-content">
-    <p>Women aged 21–29: Pap smear every 3 years. Women 30–65: Pap + HPV cotesting every 5 years preferred. Stop after 65 if adequate prior screening and low risk.</p>
-    <p class="note">Source — USPSTF 2023</p>
+    Women 21–29: Pap every 3 yrs. Women 30–65: Pap+HPV every 5 yrs. Stop after 65 if adequate.
+    <div class="note">USPSTF 2023</div>
   </div>
 </div>
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Colorectal Cancer</strong>
+  <div class="card-title">Colorectal Cancer</div>
   <div class="card-content">
-    <p>Adults aged 45–75: Annual FIT, or colonoscopy every 10 years. Continue to 85 in select high-risk individuals.</p>
-    <p class="note">Source — USPSTF 2021</p>
+    Adults 45–75: Annual FIT or colonoscopy every 10 yrs. Continue to 85 selectively.
+    <div class="note">USPSTF 2021</div>
   </div>
 </div>
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Diabetes Mellitus (Type 2)</strong>
+  <div class="card-title">Diabetes Mellitus (Type 2)</div>
   <div class="card-content">
-    <p>Adults ≥35 years or ≥18 if overweight/obese with risk factors (family history, PCOS, GDM). Repeat every 3 years if normal.</p>
-    <p class="note">Sources — USPSTF 2021, MOH</p>
+    Adults ≥35 or ≥18 if risk factors. Repeat every 3 yrs if normal.
+    <div class="note">USPSTF 2021, MOH</div>
   </div>
 </div>
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Hypertension</strong>
+  <div class="card-title">Hypertension</div>
   <div class="card-content">
-    <p>Adults ≥18 years: Check BP at least every 1–2 years if normal, annually if ≥120/80 mmHg.</p>
-    <p class="note">Sources — USPSTF, ACC/AHA 2017</p>
+    Adults ≥18: Check BP at least every 1–2 yrs if normal.
+    <div class="note">USPSTF, ACC/AHA</div>
   </div>
 </div>
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Dyslipidemia</strong>
+  <div class="card-title">Dyslipidemia</div>
   <div class="card-content">
-    <p>Men ≥35 and women ≥45: Lipid panel every 5 years. Screen earlier if risk factors (DM, smoking, HTN, family history).</p>
-    <p class="note">Source — USPSTF</p>
+    Men ≥35, women ≥45: Lipid panel every 5 yrs. Earlier if risk factors.
+    <div class="note">USPSTF</div>
   </div>
 </div>
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Obesity</strong>
+  <div class="card-title">Obesity</div>
   <div class="card-content">
-    <p>All adults & children ≥6 years: Screen for obesity using BMI & waist circumference. Counsel if BMI ≥25 kg/m².</p>
-    <p class="note">Sources — USPSTF, WHO</p>
+    All ≥6 yrs: Screen using BMI. Counsel if BMI ≥25.
+    <div class="note">USPSTF, WHO</div>
   </div>
 </div>
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Hepatitis B & C</strong>
+  <div class="card-title">Hepatitis B & C</div>
   <div class="card-content">
-    <p>HBV: Screen if high-risk (dialysis, household/sexual contact).<br>HCV: One-time screen for adults 18–79, earlier if IV drug use or high-risk.</p>
-    <p class="note">Sources — CDC, USPSTF 2020</p>
+    HBV: High risk. HCV: Once for adults 18–79, earlier if risk.
+    <div class="note">CDC, USPSTF 2020</div>
   </div>
 </div>
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Tuberculosis (TB)</strong>
+  <div class="card-title">Tuberculosis</div>
   <div class="card-content">
-    <p>Screen high-risk (contacts, healthcare workers, migrants from high TB areas) using TST or IGRA.</p>
-    <p class="note">Sources — WHO, MOH</p>
+    Screen high-risk using TST or IGRA.
+    <div class="note">WHO, MOH</div>
   </div>
 </div>
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Depression & Anxiety</strong>
+  <div class="card-title">Depression & Anxiety</div>
   <div class="card-content">
-    <p>All adults & adolescents ≥12 years: Screen annually using PHQ-9 & GAD-7. Pay attention in postpartum women.</p>
-    <p class="note">Sources — USPSTF, MOH</p>
+    All ≥12 yrs: PHQ-9 & GAD-7 annually.
+    <div class="note">USPSTF, MOH</div>
   </div>
 </div>
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Smoking & Substance Use</strong>
+  <div class="card-title">Smoking & Substance Use</div>
   <div class="card-content">
-    <p>Ask all ≥12 years about tobacco (cigarettes, shisha) & substance use. Counsel and offer cessation aids.</p>
-    <p class="note">Sources — USPSTF, WHO</p>
+    Ask all ≥12 yrs. Counsel and support cessation.
+    <div class="note">USPSTF, WHO</div>
   </div>
 </div>
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Premarital Screening</strong>
+  <div class="card-title">Premarital Screening</div>
   <div class="card-content">
-    <p>Mandatory for couples before marriage: includes hemoglobinopathies (sickle cell, thalassemia), hepatitis B/C, HIV.</p>
-    <p class="note">Source — MOH Saudi Premarital Program</p>
+    Mandatory before marriage: hemoglobinopathies, HBV, HCV, HIV.
+    <div class="note">MOH Saudi Program</div>
   </div>
 </div>
 
 <div class="card" onclick="toggleCard(this)">
-  <strong>Osteoporosis</strong>
+  <div class="card-title">Osteoporosis</div>
   <div class="card-content">
-    <p>Women ≥65: DEXA scan. Younger postmenopausal women if fracture risk ≥9.3%. Men if risk factors.</p>
-    <p class="note">Source — USPSTF 2018</p>
+    Women ≥65: DEXA. Younger if risk ≥9.3%. Men if risk factors.
+    <div class="note">USPSTF 2018</div>
   </div>
 </div>
+
+</div>
+
+<a class="back-link" href="../index.html">&larr; Back to Home</a>
 
 <script>
 function toggleCard(card) {
   const content = card.querySelector(".card-content");
-  if (content.style.display === "block") {
-    content.style.display = "none";
-  } else {
-    content.style.display = "block";
-  }
+  content.style.display = (content.style.display === "block") ? "none" : "block";
 }
 </script>
-
-<p><a href="../index.html">&larr; Back to Home</a></p>
 
 </body>
 </html>
