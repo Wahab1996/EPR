@@ -2,106 +2,59 @@
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>جدول وفحص التطعيمات للأطفال - السعودية</title>
+<title>فاحص التطعيمات الوطني للأطفال – السعودية</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f9ff;
-  color: #333;
-  margin: 0;
-  padding: 20px;
-  direction: rtl;
-  text-align: right;
-}
-h1 {
-  color: #004080;
-  text-align: center;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-}
-th, td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: center;
-}
-th {
-  background-color: #e0e7ff;
-}
-input {
-  padding: 6px;
-  margin: 5px 0;
-}
-button {
-  padding: 6px 12px;
-  background-color: #004080;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-button:hover {
-  background-color: #003366;
-}
-#result {
-  margin-top: 20px;
-  font-weight: bold;
-  color: green;
-}
+body {font-family: Arial; direction: rtl; padding: 20px; background-color: #f4f9ff; text-align: center;}
+.container {max-width: 500px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
+h1 {color: #004080;}
+label, input, button {font-size: 16px; margin: 10px 0;}
+button {padding: 8px 16px; background: #004080; color: #fff; border: none; cursor: pointer;}
+button:hover {background: #003366;}
+#result {margin-top: 20px; font-size: 18px; font-weight: bold; color: #006600;}
+.reference {margin-top: 40px; font-size: 14px; color: #555;}
 </style>
 </head>
 <body>
 
-<h1>جدول وفحص التطعيمات الوطنية للأطفال</h1>
+<div class="container">
+<h1>فاحص التطعيمات الوطني للأطفال</h1>
 
-<table>
-  <tr>
-    <th>العمر</th>
-    <th>التطعيمات</th>
-  </tr>
-  <tr><td>عند الولادة</td><td>BCG + التهاب كبدي ب (Hep B)</td></tr>
-  <tr><td>شهر</td><td>Hep B (الثانية)</td></tr>
-  <tr><td>شهران</td><td>DTP + Hib + IPV + HBV + PCV + Rotavirus</td></tr>
-  <tr><td>4 أشهر</td><td>DTP + Hib + IPV + HBV + PCV + Rotavirus</td></tr>
-  <tr><td>6 أشهر</td><td>DTP + Hib + IPV + HBV + PCV + Rotavirus</td></tr>
-  <tr><td>9 أشهر</td><td>الحصبة (Measles)</td></tr>
-  <tr><td>12 شهرًا</td><td>MMR + PCV + IPV</td></tr>
-  <tr><td>18 شهرًا</td><td>DTP + Hib + HBV + MMR</td></tr>
-  <tr><td>4-6 سنوات</td><td>DTP + IPV + OPV</td></tr>
-</table>
+<p>أدخل عمر الطفل بالشهور أو السنوات (×12) لمعرفة التطعيمات المستحقة حسب الجدول الوطني.</p>
 
-<h2>🔍 تحقق من التطعيمات المطلوبة حسب العمر</h2>
-<label>أدخل العمر بالشهور: </label>
-<input type="number" id="age" placeholder="مثال: 6">
-<button onclick="checkVaccine()">تحقق</button>
+<label>العمر بالشهور:</label>
+<input type="number" id="age" placeholder="مثال: 12">
+<br>
+<button onclick="check()">تحقق</button>
 
 <div id="result"></div>
 
+<p class="reference">
+المصدر: <strong>وزارة الصحة السعودية – الجدول الوطني للتطعيمات (ديسمبر 2019)</strong><br>
+<a href="https://www.moh.gov.sa/en/HealthAwareness/EducationalContent/HealthTips/Documents/Immunization-Schedule.pdf" target="_blank">
+اضغط هنا لعرض الملف الرسمي</a>
+</p>
+</div>
+
 <script>
-function checkVaccine() {
-  const age = parseInt(document.getElementById("age").value);
-  const result = document.getElementById("result");
-  let vaccines = "";
-
-  if (isNaN(age) || age < 0) {
-    result.textContent = "رجاءً أدخل عمر صحيح بالشهور.";
-    return;
-  }
-
-  if (age === 0) vaccines = "BCG + التهاب كبدي ب (Hep B)";
-  else if (age === 1) vaccines = "Hep B (الثانية)";
-  else if (age === 2) vaccines = "DTP + Hib + IPV + HBV + PCV + Rotavirus";
-  else if (age === 4) vaccines = "DTP + Hib + IPV + HBV + PCV + Rotavirus";
-  else if (age === 6) vaccines = "DTP + Hib + IPV + HBV + PCV + Rotavirus";
-  else if (age === 9) vaccines = "الحصبة (Measles)";
-  else if (age === 12) vaccines = "MMR + PCV + IPV";
-  else if (age === 18) vaccines = "DTP + Hib + HBV + MMR";
-  else if (age >= 48 && age <= 72) vaccines = "DTP + IPV + OPV (معزّز عند دخول المدرسة)";
-  else vaccines = "لا يوجد تطعيم روتيني محدد لهذا العمر في الجدول الوطني.";
-
-  result.textContent = "التطعيمات المطلوبة: " + vaccines;
+function check(){
+  const a = parseInt(document.getElementById('age').value);
+  const r = document.getElementById('result');
+  r.textContent = '';
+  if(isNaN(a) || a < 0) return;
+  let t = '';
+  if(a===0) t='BCG + HepB';
+  else if(a===2) t='RV + DTaP + Hib + IPV + PCV + HepB';
+  else if(a===4) t='RV + DTaP + Hib + IPV + PCV';
+  else if(a===6) t='RV + DTaP + Hib + IPV + PCV + HepB';
+  else if(a===9) t='Measles + MCV4';
+  else if(a===12) t='MMR + PCV + IPV + Hib + HepA';
+  else if(a===18) t='DTaP + Hib + IPV + MMR + HepA + Varicella';
+  else if(a===24) t='HepA (الجرعة الثانية)';
+  else if(a>=48 && a<=72) t='DTaP + IPV + MMR + Varicella';
+  else if(a>=132 && a<144) t='Tdap + MCV4 + HPV للفتيات';
+  else if(a>=144 && a<180) t='HPV للفتيات (الجرعة الثانية)';
+  else if(a>=216 && a<240) t='MCV4 معززة';
+  if(t) r.textContent='🩺 التطعيمات المطلوبة: ' + t;
 }
 </script>
 
