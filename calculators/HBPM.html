@@ -47,6 +47,22 @@ th, td {
   text-align: center;
   color: #555;
 }
+
+/* عند الطباعة فقط: إخفاء كل شيء خارج .print-area */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area, .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
 </style>
 </head>
 <body>
