@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حاسبة جرعة التسمم بالباراسيتامول</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  padding: 20px;
+  direction: rtl;
+}
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+h2 {
+  text-align: center;
+}
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0;
+}
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.result {
+  margin-top: 20px;
+  padding: 10px;
+  background: #eee;
+  border-right: 5px solid #333;
+}
+.algorithm {
+  margin-top: 20px;
+  padding: 10px;
+  background: #eef;
+  border-right: 5px solid #0077cc;
+}
+a {
+  color: #0077cc;
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>حاسبة التسمم بالباراسيتامول</h2>
+  <label>وزن المريض (كجم):</label>
+  <input type="number" id="weight" placeholder="مثال: 13">
+  <label>الكمية المستهلكة (مل):</label>
+  <input type="number" id="volume" placeholder="مثال: 100">
+  <label>التركيز (ملغ لكل 5 مل):</label>
+  <input type="number" id="concentration" value="120">
+  <button onclick="calculate()">احسب</button>
+  <div id="result" class="result"></div>
+  <div id="algorithm" class="algorithm"></div>
+</div>
+
+<script>
+function calculate() {
+  const weight = parseFloat(document.getElementById('weight').value);
+  const volume = parseFloat(document.getElementById('volume').value);
+  const concentration = parseFloat(document.getElementById('concentration').value);
+
+  if (!weight || !volume || !concentration) {
+    document.getElementById('result').innerHTML = "يرجى تعبئة جميع الحقول.";
+    document.getElementById('algorithm').innerHTML = "";
+    return;
+  }
+
+  const totalDoseMg = (volume / 5) * concentration;
+  const dosePerKg = totalDoseMg / weight;
+
+  let message = `الجرعة الكلية: <strong>${totalDoseMg.toFixed(1)} ملغ</strong><br>`;
+  message += `الجرعة لكل كجم: <strong>${dosePerKg.toFixed(1)} ملغ/كجم</strong><br>`;
+
+  let algo = `<strong>الخطة المقترحة للتعامل:</strong><br>`;
+
+  if (dosePerKg >= 150) {
+    message += `<span style="color:red;">⚠️ الجرعة فوق الحد السمي (150 ملغ/كجم). يلزم التقييم الطبي الفوري.</span>`;
+    algo += `
+    • تأكيد وقت التعاطي.<br>
+    • إذا خلال 4 ساعات: الانتظار حتى 4 ساعات وأخذ مستوى الباراسيتامول في الدم.<br>
+    • إذا فوق الخط في مخطط Rumack–Matthew → بدء العلاج بـ <strong>N-acetylcysteine (NAC)</strong>.<br>
+    • إذا تأخر >8 ساعات → بدء NAC فورًا أثناء انتظار النتائج.<br>
+    • مراقبة وظائف الكبد، INR، كرياتينين، جلوكوز.<br>
+    • القبول بالمستشفى عند وجود علامات إصابة كبدية.<br><br>
+    📄 <a href="https://www.nps.org.au/assets/NAC-dosing-chart.pdf" target="_blank">رابط: جدول جرعات NAC للأطفال والبالغين (IV)</a>
+    `;
+  } else {
+    message += `<span style="color:green;">✅ الجرعة تحت الحد السمي (150 ملغ/كجم). مع ذلك يجب المراقبة واستشارة الطبيب.</span>`;
+    algo += `
+    • المراقبة السريرية والمتابعة.<br>
+    • التأكد من عدم وجود عوامل خطر (سوء تغذية، أمراض كبدية).<br>
+    • في حال وجود عوامل خطر أو شك → بدء NAC.<br>
+    • التثقيف والمتابعة.<br>
+    `;
+  }
+
+  document.getElementById('result').innerHTML = message;
+  document.getElementById('algorithm').innerHTML = algo;
+}
+</script>
+</body>
+</html>
