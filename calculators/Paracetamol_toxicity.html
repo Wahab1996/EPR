@@ -1,69 +1,114 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>حاسبة جرعة التسمم بالباراسيتامول</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Paracetamol Overdose Risk Calculator</title>
 <style>
 body {
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: #f9fafc;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+header {
+  background-color: #005c99;
+  color: white;
   padding: 20px;
-  direction: rtl;
+  text-align: center;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
 }
 .container {
-  max-width: 600px;
-  margin: auto;
-  background: #fff;
-  padding: 20px;
+  max-width: 700px;
+  margin: 30px auto;
+  background: white;
+  padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 h2 {
   text-align: center;
+  color: #005c99;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 500;
 }
 input {
   width: 100%;
-  padding: 8px;
-  margin: 6px 0;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
 }
 button {
+  background: #005c99;
+  color: white;
+  border: none;
+  padding: 12px;
   width: 100%;
-  padding: 10px;
-  margin-top: 10px;
+  margin-top: 20px;
+  font-size: 1rem;
   cursor: pointer;
+  border-radius: 4px;
 }
-.result {
-  margin-top: 20px;
-  padding: 10px;
-  background: #eee;
-  border-right: 5px solid #333;
+button:hover {
+  background: #004777;
 }
-.algorithm {
+.result, .algorithm {
   margin-top: 20px;
+  padding: 15px;
+  border-left: 5px solid #ccc;
+  background: #f5f7fa;
+  font-size: 15px;
+}
+.result strong, .algorithm strong {
+  color: #005c99;
+}
+footer {
+  text-align: center;
   padding: 10px;
-  background: #eef;
-  border-right: 5px solid #0077cc;
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 40px;
 }
 a {
-  color: #0077cc;
+  color: #005c99;
   text-decoration: none;
 }
 </style>
 </head>
 <body>
+
+<header>Paracetamol Overdose Risk Calculator</header>
+
 <div class="container">
-  <h2>حاسبة التسمم بالباراسيتامول</h2>
-  <label>وزن المريض (كجم):</label>
-  <input type="number" id="weight" placeholder="مثال: 13">
-  <label>الكمية المستهلكة (مل):</label>
-  <input type="number" id="volume" placeholder="مثال: 100">
-  <label>التركيز (ملغ لكل 5 مل):</label>
+  <h2>Assess Acute Paracetamol Ingestion in Children</h2>
+  
+  <label>Patient Weight (kg):</label>
+  <input type="number" id="weight" placeholder="e.g. 13">
+  
+  <label>Amount Ingested (mL):</label>
+  <input type="number" id="volume" placeholder="e.g. 100">
+  
+  <label>Concentration (mg per 5 mL):</label>
   <input type="number" id="concentration" value="120">
-  <button onclick="calculate()">احسب</button>
+  
+  <button onclick="calculate()">Calculate</button>
+  
   <div id="result" class="result"></div>
   <div id="algorithm" class="algorithm"></div>
 </div>
+
+<footer>
+© 2025 | Based on UpToDate & Amboss Guidelines | <a href="https://www.nps.org.au/assets/NAC-dosing-chart.pdf" target="_blank">NAC Dosing Chart</a>
+</footer>
 
 <script>
 function calculate() {
@@ -72,7 +117,7 @@ function calculate() {
   const concentration = parseFloat(document.getElementById('concentration').value);
 
   if (!weight || !volume || !concentration) {
-    document.getElementById('result').innerHTML = "يرجى تعبئة جميع الحقول.";
+    document.getElementById('result').innerHTML = "⚠️ Please fill in all fields.";
     document.getElementById('algorithm').innerHTML = "";
     return;
   }
@@ -80,35 +125,33 @@ function calculate() {
   const totalDoseMg = (volume / 5) * concentration;
   const dosePerKg = totalDoseMg / weight;
 
-  let message = `الجرعة الكلية: <strong>${totalDoseMg.toFixed(1)} ملغ</strong><br>`;
-  message += `الجرعة لكل كجم: <strong>${dosePerKg.toFixed(1)} ملغ/كجم</strong><br>`;
+  let message = `<strong>Total ingested:</strong> ${totalDoseMg.toFixed(1)} mg<br>`;
+  message += `<strong>Per kg:</strong> ${dosePerKg.toFixed(1)} mg/kg<br>`;
 
-  let algo = `<strong>الخطة المقترحة للتعامل:</strong><br>`;
+  let algo = `<strong>Recommended Approach:</strong><br>`;
 
   if (dosePerKg >= 150) {
-    message += `<span style="color:red;">⚠️ الجرعة فوق الحد السمي (150 ملغ/كجم). يلزم التقييم الطبي الفوري.</span>`;
+    message += `<span style="color:red;">⚠️ Above toxic threshold (150 mg/kg). Immediate medical evaluation required.</span>`;
     algo += `
-    • تأكيد وقت التعاطي.<br>
-    • إذا خلال 4 ساعات: الانتظار حتى 4 ساعات وأخذ مستوى الباراسيتامول في الدم.<br>
-    • إذا فوق الخط في مخطط Rumack–Matthew → بدء العلاج بـ <strong>N-acetylcysteine (NAC)</strong>.<br>
-    • إذا تأخر >8 ساعات → بدء NAC فورًا أثناء انتظار النتائج.<br>
-    • مراقبة وظائف الكبد، INR، كرياتينين، جلوكوز.<br>
-    • القبول بالمستشفى عند وجود علامات إصابة كبدية.<br><br>
-    📄 <a href="https://www.nps.org.au/assets/NAC-dosing-chart.pdf" target="_blank">رابط: جدول جرعات NAC للأطفال والبالغين (IV)</a>
-    `;
+    • Confirm ingestion time.<br>
+    • If <strong>≤4 hours</strong>: wait until 4 hours post-ingestion to draw serum paracetamol level.<br>
+    • If level above treatment line on Rumack–Matthew nomogram → start <strong>N-acetylcysteine (NAC)</strong>.<br>
+    • If >8 hours: start NAC immediately while awaiting results.<br>
+    • Monitor LFTs, INR, creatinine, glucose.<br>
+    • Admit if signs of liver injury or high risk.<br>`;
   } else {
-    message += `<span style="color:green;">✅ الجرعة تحت الحد السمي (150 ملغ/كجم). مع ذلك يجب المراقبة واستشارة الطبيب.</span>`;
+    message += `<span style="color:green;">✅ Below toxic threshold. Monitor and consult as needed.</span>`;
     algo += `
-    • المراقبة السريرية والمتابعة.<br>
-    • التأكد من عدم وجود عوامل خطر (سوء تغذية، أمراض كبدية).<br>
-    • في حال وجود عوامل خطر أو شك → بدء NAC.<br>
-    • التثقيف والمتابعة.<br>
-    `;
+    • Observe clinically.<br>
+    • Assess risk factors (malnutrition, liver disease, alcohol use).<br>
+    • If risk factors present or history uncertain → consider NAC.<br>
+    • Provide education and follow-up.`;
   }
 
   document.getElementById('result').innerHTML = message;
   document.getElementById('algorithm').innerHTML = algo;
 }
 </script>
+
 </body>
 </html>
