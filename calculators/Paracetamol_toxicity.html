@@ -130,7 +130,7 @@ function calculate() {
   let algo = `<strong>Recommended Approach:</strong><br>`;
 
   if (dosePerKg >= 150) {
-    message += `<span style="color:red;">⚠️ Above toxic threshold (150 mg/kg). Immediate medical evaluation required.</span>`;
+    message += `<span style="color:red;">⚠️ Above Toxic Does (150 mg/kg). Immediate medical evaluation required.</span>`;
     algo += `
     • Confirm ingestion time.<br>
     • If <strong>≤4 hours</strong>: wait until 4 hours post-ingestion to draw serum paracetamol level.<br>
@@ -139,7 +139,7 @@ function calculate() {
     • Monitor LFTs, INR, creatinine, glucose.<br>
     • Admit if signs of liver injury or high risk.<br>`;
   } else {
-    message += `<span style="color:green;">✅ Below toxic threshold. Monitor and consult as needed.</span>`;
+    message += `<span style="color:green;">✅ Below Toxic Does. Monitor and consult as needed.</span>`;
     algo += `
     • Observe clinically.<br>
     • Assess risk factors (malnutrition, liver disease, alcohol use).<br>
