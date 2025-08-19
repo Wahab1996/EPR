@@ -1,75 +1,243 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diabetes Mellitus - Summary</title>
-<style>
-  body { font-family: Arial, sans-serif; line-height: 1.6; background-color: #f9f9f9; color: #333; padding: 20px; }
-  h1 { color: #0066cc; }
-  details { margin-bottom: 1em; background: #fff; padding: 10px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-  summary { font-weight: bold; cursor: pointer; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>طب الأسرة | تعريف وخدمات وأهمية</title>
+  <meta name="description" content="صفحة عربية مبسّطة تشرح ما هو طب الأسرة، أهميته، الخدمات المقدّمة، أسئلة شائعة، وحاسبة مؤشر كتلة الجسم BMI." />
+  <meta name="theme-color" content="#0ea5a0" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f7faf9; --card:#ffffff; --text:#0f172a; --muted:#475569;
+      --brand:#0ea5a0; --brand-2:#22c7bd; --accent:#f59e0b; --border:#e2e8f0;
+      --radius:14px; --shadow:0 10px 24px rgba(0,0,0,.08);
+    }
+    @media (prefers-color-scheme: dark){
+      :root{ --bg:#0c1312; --card:#121917; --text:#e6f2f0; --muted:#9fb4b1; --border:#22312e; --shadow:0 12px 28px rgba(0,0,0,.35); }
+    }
+    :root[data-theme="dark"]{ --bg:#0c1312; --card:#121917; --text:#e6f2f0; --muted:#9fb4b1; --border:#22312e; --shadow:0 12px 28px rgba(0,0,0,.35); }
+
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:"Cairo",system-ui,Segoe UI,Roboto,Arial;line-height:1.9}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:980px;margin-inline:auto;padding:24px}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--brand);color:#fff;border:0;border-radius:12px;padding:.8rem 1.1rem;cursor:pointer;box-shadow:var(--shadow);font-weight:800}
+    .btn.secondary{background:transparent;color:var(--brand);border:2px solid var(--brand)}
+    .btn:focus-visible{outline:3px solid color-mix(in oklab,var(--brand) 40%, transparent)}
+    header{
+      position:sticky;top:0;z-index:20;background:rgba(255,255,255,.75);
+      backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--border)
+    }
+    @media (prefers-color-scheme: dark){ header{background:rgba(15,22,20,.6)} }
+    .nav{display:flex;justify-content:space-between;align-items:center;gap:16px}
+    .brand{display:flex;align-items:center;gap:10px;color:var(--brand);font-weight:800}
+    .nav a{padding:.6rem .8rem;border-radius:10px}
+    .nav a:hover{background:var(--card)}
+    .hero{padding:40px 0}
+    h1{margin:.4rem 0 0;font-size:2rem}
+    .lead{color:var(--muted);max-width:60ch}
+    .grid{display:grid;gap:16px}
+    .g-3{grid-template-columns:repeat(3,1fr)}
+    .g-2{grid-template-columns:repeat(2,1fr)}
+    @media (max-width:900px){ .g-3,.g-2{grid-template-columns:1fr} }
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+    .section{scroll-margin-top:84px;margin-top:18px}
+    .title{display:flex;align-items:center;gap:10px;margin:8px 0 12px}
+    .dot{width:10px;height:10px;border-radius:50%;background:var(--accent)}
+    .list{margin:0;padding-inline-start:1.1rem}
+    .list li{margin:.3rem 0}
+    .k{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0b3d37;color:#c7fffa;padding:.15rem .45rem;border-radius:8px}
+    .faq details{border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--card)}
+    .faq details + details{margin-top:10px}
+    .table{width:100%;border-collapse:separate;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+    .table th,.table td{padding:10px;border-bottom:1px solid var(--border)}
+    .table tr:last-child td{border-bottom:0}
+    footer{margin-top:30px;border-top:1px solid var(--border);background:color-mix(in oklab, var(--brand) 7%, transparent)}
+    .foot{display:flex;justify-content:space-between;align-items:center;gap:10px}
+    @media print{ header,.btn{display:none !important}; body{background:#fff;color:#000}; .card{box-shadow:none;border-color:#ccc} }
+  </style>
 </head>
 <body>
+  <!-- شريط تنقّل -->
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="الرئيسية">طبّ الأسرة</a>
+      <nav aria-label="روابط">
+        <a href="#about">التعريف</a>
+        <a href="#services">الخدمات</a>
+        <a href="#when">متى أزور؟</a>
+        <a href="#bmi">حاسبة BMI</a>
+        <a href="#faq">الأسئلة</a>
+        <button id="theme" class="btn secondary" type="button" aria-pressed="false" aria-label="تبديل الوضع">🌓 داكن</button>
+      </nav>
+    </div>
+  </header>
 
-<h1>📋 Diabetes Mellitus</h1>
-<p><b>Definition:</b> Group of metabolic diseases characterized by chronic hyperglycemia due to insulin deficiency and/or resistance.</p>
-<p><b>Main types:</b> Type 1 (autoimmune, absolute insulin deficiency) & Type 2 (insulin resistance + relative insulin deficiency).</p>
-<p><b>Goal of management:</b> Achieve glycemic targets, prevent complications, improve quality of life.</p>
+  <!-- بطل الصفحة -->
+  <section class="hero container" id="top">
+    <div class="grid g-2">
+      <div>
+        <span class="k">رعاية أولية شاملة</span>
+        <h1>طبّ الأسرة: رعاية مستمرة لكل أفراد العائلة</h1>
+        <p class="lead">تخصص يركّز على الوقاية والكشف المبكر وإدارة الأمراض الحادة والمزمنة، مع تنسيق الرعاية عبر مختلف التخصصات — لجميع الأعمار من الطفولة إلى الشيخوخة.</p>
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <a class="btn" href="#services">استكشف الخدمات</a>
+          <a class="btn secondary" href="#faq">اقرأ الأسئلة الشائعة</a>
+        </div>
+      </div>
+      <div class="card">
+        <strong>نقاط سريعة:</strong>
+        <ul class="list">
+          <li>طبيب واحد يعرف تاريخك الصحي ويتابعك على المدى الطويل ✔️</li>
+          <li>وقاية وفحوصات دورية حسب العمر والجنس 💡</li>
+          <li>إدارة السكري، الضغط، الربو… مع خطط مخصّصة</li>
+          <li>إحالات ذكية عند الحاجة لتخصصات أخرى</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-<details>
-<summary>🔍 Epidemiology & Risk Factors</summary>
-<ul>
-  <li>Type 1: ~5-10%, onset usually <20 years, HLA-DR3/4 associated.</li>
-  <li>Type 2: ~90-95%, onset usually >40 years, associated with obesity, sedentary lifestyle, family history.</li>
-</ul>
-</details>
+  <main class="container">
+    <!-- التعريف -->
+    <section id="about" class="section">
+      <div class="title"><span class="dot"></span><h2>ما هو طبّ الأسرة؟</h2></div>
+      <div class="card">
+        <p><strong>طبّ الأسرة</strong> هو تخصص طبي يقدّم رعاية شاملة ومستمرة للفرد والأسرة بغضّ النظر عن العمر أو الجنس أو نوع المشكلة الصحية. يجمع بين <em>الوقاية</em> و<em>العلاج</em> و<em>التثقيف الصحي</em> و<em>تنسيق الرعاية</em> لضمان أفضل النتائج الصحية بأقل كلفة ممكنة.</p>
+        <p class="muted">⚠️ هذه المادة للتوعية فقط ولا تُعد تشخيصًا أو بديلًا عن الاستشارة الطبية.</p>
+      </div>
+    </section>
 
-<details>
-<summary>🔍 Pathophysiology</summary>
-<ul>
-  <li>Type 1: Autoimmune β-cell destruction → absolute insulin deficiency.</li>
-  <li>Type 2: Insulin resistance + progressive β-cell dysfunction → relative insulin deficiency.</li>
-</ul>
-</details>
+    <!-- الخدمات -->
+    <section id="services" class="section">
+      <div class="title"><span class="dot"></span><h2>الخدمات التي يقدّمها طبيب الأسرة</h2></div>
+      <div class="grid g-3">
+        <article class="card"><h3>الوقاية والتحصينات</h3><p class="muted">جداول تطعيم، فحوصات دورية، ونصائح نمط حياة.</p></article>
+        <article class="card"><h3>إدارة الأمراض المزمنة</h3><p class="muted">متابعة السكري، ارتفاع الضغط، اضطرابات الدهون، والربو.</p></article>
+        <article class="card"><h3>علاج الحالات الحادة</h3><p class="muted">نزلات البرد، التهابات بسيطة، وآلام شائعة غير مهدِّدة للحياة.</p></article>
+        <article class="card"><h3>صحة الطفل</h3><p class="muted">نمو وتغذية وتحصينات ومشاكل سلوكية شائعة.</p></article>
+        <article class="card"><h3>صحة المرأة</h3><p class="muted">رعاية ما قبل الحمل، متابعة الحمل منخفض الخطورة، وتنظيم الأسرة.</p></article>
+        <article class="card"><h3>رعاية المسنين</h3><p class="muted">تقييم الذاكرة والتوازن، الوقاية من السقوط، ومراجعة الأدوية.</p></article>
+      </div>
+    </section>
 
-<details>
-<summary>🔍 Clinical Features</summary>
-<ul>
-  <li>Classic: Polyuria, polydipsia, polyphagia, weight loss.</li>
-  <li>Type 2 often asymptomatic or diagnosed on screening.</li>
-  <li>Acute presentations: DKA (T1DM), HHS (T2DM).</li>
-</ul>
-</details>
+    <!-- متى أزور -->
+    <section id="when" class="section">
+      <div class="title"><span class="dot"></span><h2>متى أزور طبيب الأسرة؟</h2></div>
+      <div class="card">
+        <ul class="list">
+          <li>لبناء ملف صحي أساسي والمتابعة الوقائية حسب عمرك.</li>
+          <li>عند ظهور أعراض حادة بسيطة غير إسعافية.</li>
+          <li>لمتابعة الأمراض المزمنة أو تعديل الأدوية بأمان.</li>
+          <li>قبل الحمل وأثناءه (انخفاض الخطورة) ومع صحة الطفل.</li>
+          <li>لدعم نمط الحياة: الإقلاع عن التدخين، الوزن، النوم.</li>
+        </ul>
+      </div>
+    </section>
 
-<details>
-<summary>🔍 Diagnosis</summary>
-<ul>
-  <li>Fasting glucose ≥126 mg/dL, or random ≥200 mg/dL with symptoms.</li>
-  <li>HbA1c ≥6.5% or 2-hour OGTT ≥200 mg/dL.</li>
-</ul>
-</details>
+    <!-- حاسبة BMI -->
+    <section id="bmi" class="section">
+      <div class="title"><span class="dot"></span><h2>حاسبة مؤشر كتلة الجسم (BMI)</h2></div>
+      <div class="card">
+        <form id="bmiForm" class="grid g-3" onsubmit="return false" novalidate>
+          <label>الوزن (كجم)
+            <input id="w" type="number" min="1" step="0.1" placeholder="مثال: 72" required style="width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;background:transparent;color:var(--text)">
+          </label>
+          <label>الطول (سم)
+            <input id="h" type="number" min="30" step="0.1" placeholder="مثال: 170" required style="width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;background:transparent;color:var(--text)">
+          </label>
+          <div style="display:flex;align-items:end;gap:10px">
+            <button id="calc" class="btn" type="button">احسب</button>
+            <span aria-live="polite"><strong>النتيجة:</strong> <span id="out" class="k">—</span></span>
+          </div>
+        </form>
+        <small id="bmiMsg" class="muted"></small>
+      </div>
+    </section>
 
-<details>
-<summary>🔍 Management</summary>
-<ul>
-  <li>Lifestyle: Diet, exercise, weight loss, smoking cessation.</li>
-  <li>Pharmacologic: Metformin first-line (T2DM), insulin required (T1DM).</li>
-  <li>Additional: GLP-1 RAs, SGLT2i, DPP-4 inhibitors, sulfonylureas.</li>
-  <li>Monitor for complications: retinal, renal, neuropathic, cardiovascular.</li>
-</ul>
-</details>
+    <!-- الأسئلة الشائعة -->
+    <section id="faq" class="section faq">
+      <div class="title"><span class="dot"></span><h2>أسئلة شائعة</h2></div>
+      <details>
+        <summary><strong>هل يمكن لطبيب الأسرة متابعة السكري والضغط؟</strong></summary>
+        <p>نعم، يتابع القياسات، يضبط الأدوية، ويضع خطة وقائية ويُحيل عند الحاجة.</p>
+      </details>
+      <details>
+        <summary><strong>هل يتعامل مع الصحة النفسية؟</strong></summary>
+        <p>نعم، التشخيص الأولي للحالات الخفيفة–المتوسطة مثل القلق والاكتئاب مع دعم وإحالة متخصصة إذا لزم.</p>
+      </details>
+      <details>
+        <summary><strong>هل أحتاج زيارة حتى وأنا «سليم»؟</strong></summary>
+        <p>الزيارات الوقائية تبني خط أساس وتكشف المخاطر مبكرًا — مفيدة للجميع ✔️.</p>
+      </details>
+    </section>
 
-<details>
-<summary>🔍 Complications</summary>
-<ul>
-  <li>Acute: DKA, HHS, hypoglycemia.</li>
-  <li>Chronic: Microvascular (retinopathy, nephropathy, neuropathy) & macrovascular (CAD, stroke, PAD).</li>
-</ul>
-</details>
+    <!-- مراجع -->
+    <section id="refs" class="section">
+      <div class="title"><span class="dot"></span><h2>مراجع موثوقة</h2></div>
+      <div class="card" style="padding:0">
+        <table class="table" aria-label="مراجع">
+          <thead><tr><th>المصدر</th><th>الرابط</th></tr></thead>
+          <tbody>
+            <tr><td>منظمة الصحة العالمية — الرعاية الصحية الأولية</td><td><a href="https://www.who.int/health-topics/primary-health-care" target="_blank" rel="noopener">who.int</a></td></tr>
+            <tr><td>الأكاديمية الأمريكية لطب الأسرة (AAFP)</td><td><a href="https://www.aafp.org/" target="_blank" rel="noopener">aafp.org</a></td></tr>
+            <tr><td>CDC — موارد صحة الأسرة</td><td><a href="https://www.cdc.gov/family/index.htm" target="_blank" rel="noopener">cdc.gov</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="margin-top:6px">❗ المعلومات عامة للتثقيف، وليست بديلاً عن التشخيص الطبي.</p>
+    </section>
+  </main>
 
-<p style="font-size:0.9em; color:#666;">Source: Latest ADA & ISPAD guidelines.</p>
+  <footer>
+    <div class="container foot">
+      <p class="muted">© <span id="y"></span> طب الأسرة — صفحة توعوية.</p>
+      <a class="btn secondary" href="#top">العودة للأعلى ↑</a>
+    </div>
+  </footer>
 
+  <script>
+    // سنة ديناميكية
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // تبديل الوضع (فاتح/داكن)
+    const themeBtn = document.getElementById('theme');
+    const KEY = 'pref-theme';
+    const apply = (m)=>{ document.documentElement.dataset.theme = m; themeBtn.setAttribute('aria-pressed', m==='dark'); themeBtn.textContent = (m==='dark'?'☀️ فاتح':'🌓 داكن'); };
+    const saved = localStorage.getItem(KEY); if(saved){ apply(saved); }
+    themeBtn.addEventListener('click', ()=>{ const next = (document.documentElement.dataset.theme==='dark')?'light':'dark'; localStorage.setItem(KEY,next); apply(next); });
+
+    // حاسبة BMI
+    const w = document.getElementById('w'), h = document.getElementById('h'), out = document.getElementById('out'), msg = document.getElementById('bmiMsg');
+    const calc = () => {
+      const W = parseFloat(w.value), Hcm = parseFloat(h.value);
+      if(!W || !Hcm){ out.textContent='—'; msg.textContent=''; return; }
+      const H = Hcm/100;
+      const bmi = W/(H*H);
+      const r = Math.round(bmi*10)/10;
+      out.textContent = String(r);
+      let t='';
+      if(bmi < 18.5) t='نحافة: راجع الطبيب لتقييم التغذية.';
+      else if(bmi < 25) t='وزن طبيعي: استمر على نمط صحي.';
+      else if(bmi < 30) t='زيادة وزن: حسّن التغذية وزد النشاط.';
+      else t='سمنة: يُنصح بخطة شاملة ومتابعة طبية.';
+      msg.textContent = t;
+    };
+    document.getElementById('calc').addEventListener('click', calc);
+    [w,h].forEach(i=>i.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); calc(); }}));
+
+    // تمرير سلس
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',(e)=>{
+        const id=a.getAttribute('href');
+        if(id && id.length>1){
+          e.preventDefault();
+          document.querySelector(id)?.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      });
+    });
+  </script>
 </body>
 </html>
