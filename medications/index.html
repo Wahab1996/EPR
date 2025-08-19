@@ -1,120 +1,354 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>💊 Medications Reference</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>KSA Family Medicine Drugs — Adult Quick Reference</title>
+  <meta name="description" content="Common family medicine drugs in Saudi Arabia (adults): indications, typical doses, cautions, and primary sources (NHS/BNF/GINA/FDA/SFDA, etc.)." />
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fdfdfd;
-      color: #222;
-      margin: 0;
-      padding: 20px;
-      line-height: 1.7;
+    :root{
+      --bg: #0b0d12;
+      --card:#121520;
+      --muted:#96a1b3;
+      --text:#e7ecf5;
+      --accent:#57c3ff;
+      --chip:#1b2233;
+      --chip-on:#17304a;
+      --ok:#49d39e;
+      --warn:#ffcc66;
+      --danger:#ff6b6b;
+      --border:#263247;
     }
-    h1, h2, h3, h4 {
-      color: #004080;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
+      background:linear-gradient(180deg,#0a0d13,#0b0d12 60%);
+      color:var(--text);
     }
-    section {
-      max-width: 1000px;
-      margin: auto;
-      background: #ffffff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+    header{
+      position:sticky;top:0;z-index:10;
+      backdrop-filter:saturate(120%) blur(8px);
+      background:linear-gradient(180deg,rgba(14,18,26,.86),rgba(14,18,26,.72));
+      border-bottom:1px solid var(--border);
     }
-    ul {
-      padding-left: 20px;
+    .wrap{max-width:1160px;margin:auto;padding:18px}
+    h1{margin:6px 0 8px;font-size:clamp(20px,2.6vw,28px);letter-spacing:.3px}
+    .sub{color:var(--muted);font-size:14px}
+    .toolbar{
+      display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;margin-top:12px;
     }
-    li {
-      margin-bottom: 10px;
+    .search{
+      display:flex;align-items:center;background:var(--card);border:1px solid var(--border);
+      border-radius:12px;padding:10px 12px;gap:10px
     }
-    hr {
-      border: none;
-      border-top: 2px dashed #ccc;
-      margin: 40px 0;
+    .search input{
+      flex:1;background:transparent;border:0;outline:0;color:var(--text);font-size:15px;
     }
-    .note {
-      font-size: 0.95em;
-      color: #555;
-      background: #f9f9f9;
-      border-left: 4px solid #007acc;
-      padding: 10px 15px;
-      margin-top: 30px;
+    .btn{
+      background:var(--chip);color:var(--text);
+      border:1px solid var(--border);padding:10px 14px;border-radius:10px;cursor:pointer;
+      transition:.15s; font-weight:600
+    }
+    .btn:hover{transform:translateY(-1px);border-color:#35517a}
+    .btn.primary{background:var(--accent);color:#041423;border-color:transparent}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .chip{padding:7px 10px;border-radius:999px;background:var(--chip);border:1px solid var(--border);font-size:12px;color:#cbd6e7;cursor:pointer}
+    .chip.on{background:var(--chip-on);border-color:#2b4f78;color:#e5f3ff}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:18px}
+    .card{
+      grid-column:span 12;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:14px;
+      display:grid;grid-template-columns:2fr 3fr 3fr 2.5fr 1.5fr;gap:14px;align-items:start
+    }
+    .g{color:#9fc8ff;font-weight:700}
+    .cls{color:#b9ffe6}
+    .ind{color:#d9e2f2}
+    .dose{color:#e6ffe3}
+    .warns{color:#ffd991}
+    .src a{color:#9fc8ff;text-decoration:none}
+    .src a:hover{text-decoration:underline}
+    .badge{display:inline-block; padding:2px 8px;border-radius:999px;border:1px solid var(--border);background:#0e1726;color:#c3d2e9;font-size:11px;margin-right:6px}
+    .copy{background:#0e283a;border:1px solid #21486b;color:#cde9ff;padding:6px 9px;border-radius:8px;cursor:pointer;font-size:12px}
+    .copy:hover{background:#13324a}
+    .footer{
+      margin-top:30px;padding:18px;border-top:1px solid var(--border);color:var(--muted);font-size:13px
+    }
+    details{background:#0e1522;border:1px solid var(--border);border-radius:12px;padding:12px;margin-top:18px}
+    details summary{cursor:pointer;font-weight:700;color:#cfe6ff}
+    .refs{columns:2;column-gap:24px}
+    .refs a{color:#9fc8ff;text-decoration:none}
+    .refs a:hover{text-decoration:underline}
+    .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .legend .badge{border-color:#314d77}
+    .muted{color:var(--muted)}
+    .count{color:#9fc8ff;font-weight:700}
+    @media (max-width:1020px){
+      .card{grid-template-columns:1fr;gap:10px}
+      .grid{gap:10px}
+      .refs{columns:1}
+      .toolbar{grid-template-columns:1fr auto}
+    }
+    @media print{
+      body{background:white;color:black}
+      header{position:static;background:white;border:none}
+      .btn,.chips{display:none !important}
+      .card{border-color:#bbb;background:white}
+      a{color:#0047b3 !important}
     }
   </style>
 </head>
 <body>
-  <section id="medications">
-    <h1>💊 Medications Reference</h1>
-    <p>This section provides a comprehensive, evidence-based overview of commonly used medications in <b>pediatrics</b> and <b>adults</b>, according to the latest clinical guidelines including UpToDate, AAP, and ADA recommendations.</p>
-
-    <h2>🧒 Pediatric Medications</h2>
-
-    <h3>🩺 Analgesics & Antipyretics</h3>
-    <ul>
-      <li><b>Paracetamol (Acetaminophen):</b> 10–15 mg/kg/dose every 4–6 hours. Max: 75 mg/kg/day.</li>
-      <li><b>Ibuprofen:</b> 5–10 mg/kg/dose every 6–8 hours. Max: 40 mg/kg/day. Use only if ≥6 months old.</li>
-    </ul>
-
-    <h3>🦠 Antibiotics</h3>
-    <ul>
-      <li><b>Amoxicillin:</b> 45–90 mg/kg/day divided q12h. First-line for AOM, strep pharyngitis, pneumonia.</li>
-      <li><b>Amoxicillin/Clavulanate:</b> Same dose. Used for resistant pathogens or recent antibiotic use.</li>
-      <li><b>Cefdinir:</b> 14 mg/kg/day divided q12–24h. For penicillin allergy.</li>
-      <li><b>Azithromycin:</b> 10 mg/kg (day 1), then 5 mg/kg qd ×4 days. Alternative in penicillin allergy.</li>
-    </ul>
-
-    <h3>💨 Respiratory (Asthma)</h3>
-    <ul>
-      <li><b>Albuterol:</b> Nebulized 2.5 mg q4–6h. Inhaler: 2 puffs q4–6h prn.</li>
-      <li><b>ICS (Inhaled corticosteroids):</b> Budesonide, Fluticasone — maintenance therapy.</li>
-      <li><b>Montelukast:</b> 4 mg (1–5 yrs), 5 mg (6–14 yrs), 10 mg (≥15 yrs) once daily.</li>
-    </ul>
-
-    <h3>🏥 Emergencies</h3>
-    <ul>
-      <li><b>Epinephrine IM:</b> 0.01 mg/kg (max 0.3 mg) q5–15 min prn — for anaphylaxis.</li>
-      <li><b>Ondansetron:</b> 0.15 mg/kg/dose q8h prn — for nausea/vomiting.</li>
-      <li><b>Diphenhydramine:</b> 1 mg/kg/dose q6h (max 50 mg/dose).</li>
-    </ul>
-
-    <hr>
-
-    <h2>🧑 Adult Medications</h2>
-
-    <h3>🩺 Analgesics & Antipyretics</h3>
-    <ul>
-      <li><b>Paracetamol:</b> 500–1000 mg q6h prn (max 4 g/day).</li>
-      <li><b>Ibuprofen:</b> 200–400 mg q6–8h prn (max 3200 mg/day).</li>
-    </ul>
-
-    <h3>🦠 Antibiotics</h3>
-    <ul>
-      <li><b>Amoxicillin:</b> 500–875 mg q8–12h — for pharyngitis, sinusitis, pneumonia.</li>
-      <li><b>Amoxicillin/Clavulanate:</b> 875/125 mg q12h — resistant pathogens.</li>
-      <li><b>Doxycycline:</b> 100 mg q12h — for atypical or respiratory infections.</li>
-      <li><b>Azithromycin:</b> 500 mg day 1, then 250 mg daily ×4 days.</li>
-    </ul>
-
-    <h3>💨 Respiratory (Asthma & COPD)</h3>
-    <ul>
-      <li><b>Albuterol Inhaler:</b> 2 puffs q4–6h prn.</li>
-      <li><b>ICS:</b> Fluticasone, Budesonide — maintenance.</li>
-      <li><b>LABA:</b> Salmeterol, Formoterol — add-on if poor control.</li>
-    </ul>
-
-    <h3>🏥 Emergencies</h3>
-    <ul>
-      <li><b>Epinephrine IM:</b> 0.3–0.5 mg q5–15 min prn — for anaphylaxis.</li>
-      <li><b>Ondansetron:</b> 4–8 mg q8h prn.</li>
-      <li><b>Diphenhydramine:</b> 25–50 mg q6h prn.</li>
-    </ul>
-
-    <div class="note">
-      ⚠️ <b>Note:</b> All medication dosages must be tailored to patient age, weight, renal/hepatic function, and clinical context. Always cross-check with the latest clinical guidelines before prescribing.
+<header>
+  <div class="wrap">
+    <h1>Family Medicine Drugs — KSA (Adults)</h1>
+    <div class="sub">Common, high‑yield medications in Saudi primary care with typical adult doses, indications, cautions, and source links. <span class="badge">Adults</span> <span class="badge">KSA focus</span> <span class="badge">Evidence-linked</span></div>
+    <div class="toolbar">
+      <div class="search" role="search" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.2-4.2m1.7-5.3a7 7 0 11-14.001.001A7 7 0 0118.5 11.5z" stroke="#8fb1df" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="q" placeholder="Search drug, class, indication…" autocomplete="off"/>
+      </div>
+      <button class="btn" id="reset">Clear filters</button>
+      <button class="btn primary" onclick="window.print()">Print / Save PDF</button>
     </div>
-  </section>
+    <div id="chips" class="chips" aria-label="Filter by class"></div>
+    <div class="legend">
+      <span class="badge" title="NICE/BNF or NHS">UK references</span>
+      <span class="badge" title="US FDA label / Drugs.com / StatPearls">US references</span>
+      <span class="badge" title="GINA/GOLD or specialty guidelines">Specialty</span>
+      <span class="badge" title="Saudi Arabia Essential Medicines List (SFDA)">KSA EML</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="count" class="muted">Showing <span class="count">—</span> drugs</div>
+  <div id="grid" class="grid" role="list"></div>
+
+  <details open>
+    <summary>Clinical caveats / scope</summary>
+    <ul>
+      <li>Adults only. Pediatric dosing and pregnancy/lactation require separate references.</li>
+      <li>Typical doses shown for common primary‑care indications; always individualize by renal/hepatic function, drug interactions, and local antibiogram.</li>
+      <li>Follow <strong>Saudi MOH/SFDA</strong> protocols and SmPCs. This quick ref links to primary sources for verification.</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>References (live links)</summary>
+    <div class="refs" id="refs"></div>
+  </details>
+
+  <div class="footer">
+    Built for fast in‑clinic look‑up. Last edited: <span id="today"></span>.
+  </div>
+</main>
+
+<script>
+const sources = {
+  // KSA / EML
+  "sfda-eml-2023": {t:"Saudi Food & Drug Authority — Saudi Arabia Essential Medicines List (2023)", u:"https://sfda.gov.sa/sites/default/files/2024-01/Saudi%20Arabia%20essential%20medicines%20list%202023.pdf"},
+  "who-eml": {t:"WHO Model Lists of Essential Medicines", u:"https://www.who.int/teams/health-product-policy-and-standards/essential-medicines/essential-medicines-lists"},
+  // General UK (NHS/BNF/NICE)
+  "nhs-paracetamol": {t:"NHS — Paracetamol dosing", u:"https://www.nhs.uk/medicines/paracetamol-for-adults/"},
+  "emc-ibuprofen": {t:"EMC — Ibuprofen (SmPC/PIL)", u:"https://www.medicines.org.uk/emc/product/828/smpc"},
+  "nhs-ibuprofen": {t:"NHS — Ibuprofen (how and when)", u:"https://www.nhs.uk/medicines/ibuprofen-for-adults/"},
+  "nhs-naproxen": {t:"NHS — How and when to take naproxen", u:"https://www.nhs.uk/medicines/naproxen/how-and-when-to-take-naproxen/"},
+  "bnf-naproxen": {t:"BNF — Naproxen", u:"https://bnf.nice.org.uk/drugs/naproxen/"},
+  "bnf-amlodipine": {t:"BNF — Hypertension (overview)", u:"https://bnf.nice.org.uk/treatment-summaries/hypertension/"},
+  "nhs-amlodipine": {t:"NHS — Amlodipine dosing", u:"https://www.nhs.uk/medicines/amlodipine/how-and-when-to-take-amlodipine/"},
+  "bnf-losartan": {t:"BNFC/BNF — Losartan", u:"https://bnfc.nice.org.uk/drugs/losartan-potassium/"},
+  "statpearls-losartan": {t:"StatPearls — Losartan", u:"https://www.ncbi.nlm.nih.gov/books/NBK526065/"},
+  "bnf-hctz": {t:"MedCentral — Hydrochlorothiazide monograph", u:"https://www.medcentral.com/drugs/monograph/5310-382571/hydrochlorothiazide-oral"},
+  "nice-statins": {t:"NICE — Statins (primary prevention)", u:"https://www.nice.org.uk/news/articles/statins-a-choice-for-more-people-to-reduce-risk-of-heart-attacks-and-strokes"},
+  "nhs-valsartan": {t:"NHS — Valsartan dosing", u:"https://www.nhs.uk/medicines/valsartan/how-and-when-to-take-valsartan/"},
+  "bnf-valsartan": {t:"BNF — Valsartan", u:"https://bnf.nice.org.uk/drugs/valsartan/"},
+  "bnf-ramipril": {t:"BNF — Ramipril", u:"https://bnf.nice.org.uk/drugs/ramipril/"},
+  "nhs-ramipril": {t:"NHS — Ramipril (how and when)", u:"https://www.nhs.uk/medicines/ramipril/how-and-when-to-take-ramipril/"},
+  "statpearls-metoprolol": {t:"StatPearls — Metoprolol", u:"https://www.ncbi.nlm.nih.gov/books/NBK532923/"},
+  "bnf-metoprolol": {t:"BNF — Metoprolol tartrate", u:"https://bnf.nice.org.uk/drugs/metoprolol-tartrate/"},
+  "nhs-metformin": {t:"NICE CKS — Metformin dosing", u:"https://cks.nice.org.uk/topics/diabetes-type-2/prescribing-information/metformin/"},
+  "bnf-metformin": {t:"BNF — Metformin", u:"https://bnf.nice.org.uk/drugs/metformin-hydrochloride/"},
+  "bnf-gliclazide": {t:"BNF — Gliclazide", u:"https://bnf.nice.org.uk/drugs/gliclazide/"},
+  "fda-sitagliptin": {t:"FDA label — Sitagliptin (JANUVIA)", u:"https://www.accessdata.fda.gov/drugsatfda_docs/label/2019/021995s046lbl.pdf"},
+  "nhs-sertraline": {t:"NHS — Sertraline dosing", u:"https://www.nhs.uk/medicines/sertraline/how-and-when-to-take-sertraline/"},
+  "nhs-fluoxetine": {t:"NHS — Fluoxetine dosing", u:"https://www.nhs.uk/medicines/fluoxetine-prozac/how-and-when-to-take-fluoxetine/"},
+  "nhs-escitalopram": {t:"NHS — Escitalopram dosing", u:"https://www.nhs.uk/medicines/escitalopram/how-and-when-to-take-escitalopram/"},
+  "mhra-escitalopram": {t:"MHRA — Citalopram/Escitalopram QT limits", u:"https://www.gov.uk/drug-safety-update/citalopram-and-escitalopram-qt-interval-prolongation"},
+  // Anti-infectives
+  "drugs-amoxicillin": {t:"Drugs.com — Amoxicillin dosage", u:"https://www.drugs.com/dosage/amoxicillin.html"},
+  "drugs-augmentin": {t:"Drugs.com — Amoxicillin/Clavulanate dosage", u:"https://www.drugs.com/dosage/amoxicillin-clavulanate.html"},
+  "nhs-coamox": {t:"NHS — Co-amoxiclav (how and when)", u:"https://www.nhs.uk/medicines/co-amoxiclav/how-and-when-to-take-co-amoxiclav/"},
+  "bnf-azith": {t:"BNF — Azithromycin", u:"https://bnf.nice.org.uk/drugs/azithromycin/"},
+  "fda-azith": {t:"FDA label — Azithromycin (ZITHROMAX)", u:"https://www.accessdata.fda.gov/drugsatfda_docs/label/2017/050710s44-050711s41-050784s28lbl.pdf"},
+  "nhs-azith": {t:"NHS — Azithromycin (how and when)", u:"https://www.nhs.uk/medicines/azithromycin/how-and-when-to-take-azithromycin/"},
+  "bnf-doxy": {t:"BNF — Doxycycline", u:"https://bnf.nice.org.uk/drugs/doxycycline/"},
+  "nhs-doxy": {t:"NHS — Doxycycline (how and when)", u:"https://www.nhs.uk/medicines/doxycycline/how-and-when-to-take-doxycycline/"},
+  "drugs-cephalexin": {t:"Drugs.com — Cephalexin dosage", u:"https://www.drugs.com/dosage/cephalexin.html"},
+  "nhs-cefalexin": {t:"NHS — Cefalexin (how and when)", u:"https://www.nhs.uk/medicines/cefalexin/how-and-when-to-take-cefalexin/"},
+  "nhs-nitro": {t:"NHS — Nitrofurantoin (how and when)", u:"https://www.nhs.uk/medicines/nitrofurantoin/how-and-when-to-take-nitrofurantoin/"},
+  "bnf-nitro": {t:"BNF — Nitrofurantoin", u:"https://bnf.nice.org.uk/drugs/nitrofurantoin/"},
+  "statpearls-nitro": {t:"StatPearls — Nitrofurantoin", u:"https://www.ncbi.nlm.nih.gov/books/NBK470526/"},
+  "drugs-tmp": {t:"Drugs.com — TMP/SMX dosage", u:"https://www.drugs.com/dosage/sulfamethoxazole-trimethoprim.html"},
+  // Respiratory
+  "nhs-salbutamol": {t:"NHS — Salbutamol inhaler dosing", u:"https://www.nhs.uk/medicines/salbutamol-inhaler/how-and-when-to-use-salbutamol-inhalers/"},
+  "drugs-symbicort": {t:"Drugs.com — Symbicort dosage", u:"https://www.drugs.com/dosage/symbicort.html"},
+  "gina-2024": {t:"GINA 2024 — Summary Guide", u:"https://ginasthma.org/wp-content/uploads/2024/12/GINA-Summary-Guide-2024-WEB-WMS.pdf"},
+  "nhs-montelukast": {t:"NHS — Montelukast (how and when)", u:"https://www.nhs.uk/medicines/montelukast/how-and-when-to-take-montelukast/"},
+  // GI & others
+  "nhs-omep": {t:"NHS — Omeprazole dosing", u:"https://www.nhs.uk/medicines/omeprazole/how-and-when-to-take-omeprazole/"},
+  "nhs-panto": {t:"NHS — Pantoprazole dosing", u:"https://www.nhs.uk/medicines/pantoprazole/how-and-when-to-take-pantoprazole/"},
+  "bnf-famot": {t:"BNF — Famotidine", u:"https://bnf.nice.org.uk/drugs/famotidine/"},
+  "nhs-loperamide": {t:"NHS — Loperamide (how and when)", u:"https://www.nhs.uk/medicines/loperamide/"},
+  "patient-loperamide": {t:"Patient.info — Loperamide dosing (adult acute)", u:"https://patient.info/medicine/loperamide-for-diarrhoea-imodium-norimode"},
+  "bnf-ondansetron": {t:"BNF — Ondansetron", u:"https://bnf.nice.org.uk/drugs/ondansetron/"},
+  "mhra-ondansetron": {t:"MHRA — Ondansetron IV max 16 mg", u:"https://www.gov.uk/drug-safety-update/ondansetron-zofran-important-new-intravenous-dose-restriction"},
+  "bnf-metoclopramide": {t:"BNF — Metoclopramide", u:"https://bnf.nice.org.uk/drugs/metoclopramide-hydrochloride/"},
+  "nhs-metoclopramide": {t:"NHS — Metoclopramide (how and when)", u:"https://www.nhs.uk/medicines/metoclopramide/how-and-when-to-take-metoclopramide/"},
+  "mhra-metoclopramide": {t:"MHRA — Metoclopramide max 30 mg/day ≤5 days", u:"https://assets.publishing.service.gov.uk/media/5703bf00e5274a14d700004f/Metoclopramide_DHPC_sent_12_Dec_2014.pdf"},
+  // Allergy
+  "nhs-cetirizine": {t:"NHS — Cetirizine dosing", u:"https://www.nhs.uk/medicines/cetirizine/"},
+  "nhs-loratadine": {t:"NHS — Loratadine dosing", u:"https://www.nhs.uk/medicines/loratadine/"},
+  // Endocrine / Supplements
+  "nhs-levothyroxine": {t:"NHS — Levothyroxine (how and when)", u:"https://www.nhs.uk/medicines/levothyroxine/"},
+  "statpearls-levothyroxine": {t:"StatPearls — Levothyroxine", u:"https://www.ncbi.nlm.nih.gov/books/NBK539808/"},
+  "bnf-iron": {t:"BNF — Iron deficiency (elemental iron table)", u:"https://bnf.nice.org.uk/treatment-summaries/anaemia-iron-deficiency/"},
+  "nhs-ferrous": {t:"NHS — Ferrous sulfate (how and when)", u:"https://www.nhs.uk/medicines/ferrous-sulfate/how-and-when-to-take-ferrous-sulfate/"},
+  "cks-vitd": {t:"NICE CKS — Vitamin D in adults (dosing)", u:"https://cks.nice.org.uk/topics/vitamin-d-deficiency-in-adults/prescribing-information/vitamin-d-supplements/"},
+  "cks-vitd-maint": {t:"NICE CKS — Vitamin D maintenance", u:"https://cks.nice.org.uk/topics/vitamin-d-deficiency-in-adults/management/management/"},
+};
+
+const drugs = [
+  // ANALGESICS
+  {g:"Paracetamol (Acetaminophen)", c:"Analgesic / Antipyretic", i:"Pain, fever", d:"500–1000 mg PO every 4–6 h PRN; **max 4 g/day** from all sources.", w:"Avoid in severe hepatic impairment, chronic heavy alcohol use. Check combination products.", s:["nhs-paracetamol","sfda-eml-2023"]},
+  {g:"Ibuprofen", c:"NSAID", i:"Pain, dysmenorrhea, musculoskeletal", d:"200–400 mg PO every 6–8 h PRN; common max in primary care 1200 mg/day (OTC).", w:"GI bleed/ulcer, renal impairment, HF; avoid in late pregnancy; use PPI cover if risk.", s:["nhs-ibuprofen","emc-ibuprofen"]},
+  {g:"Naproxen", c:"NSAID", i:"Pain, gout, MSK", d:"Usual: 250–500 mg PO twice daily; or 500 mg once then 250 mg q6–8h PRN (max 1000–1250 mg/day short term).", w:"GI/CV risk like other NSAIDs; use lowest effective dose; avoid with other NSAIDs.", s:["nhs-naproxen","bnf-naproxen"]},
+
+  // ANTI-INFECTIVES
+  {g:"Amoxicillin", c:"Antibiotic — Penicillin", i:"URTI/LRTI, otitis media, sinusitis, SSTI", d:"500 mg PO every 8 h **or** 875 mg every 12 h; 5–10 days depending on site/severity.", w:"Penicillin allergy; adjust dose in renal impairment.", s:["drugs-amoxicillin","sfda-eml-2023"]},
+  {g:"Amoxicillin/Clavulanate", c:"Antibiotic — Penicillin + β‑lactamase inhibitor", i:"Sinusitis, bite wounds, resistant RTI/SSTI", d:"Standard: 875/125 mg PO every 12 h; alternative 625 mg PO every 8 h. Severe ABRS may need 2 g XR q12h (specialist).", w:"GI upset, cholestatic hepatitis (rare); take with food; renal dose adjust.", s:["drugs-augmentin","nhs-coamox"]},
+  {g:"Azithromycin", c:"Antibiotic — Macrolide", i:"Atypical RTI, COPD exacerbation, chlamydia (single dose regimen), traveler’s diarrhea (alt.)", d:"500 mg day 1, then 250 mg daily days 2–5 **or** 500 mg daily × 3 days (per indication).", w:"QT prolongation risk; interactions; avoid if high local resistance for RTI.", s:["bnf-azith","fda-azith","nhs-azith"]},
+  {g:"Doxycycline", c:"Antibiotic — Tetracycline", i:"RTI, sinusitis (β‑lactam allergy), acne, rickettsial", d:"Day 1: 200 mg (once or 100 mg q12h), then 100 mg daily (or 100 mg q12h if severe).", w:"Photosensitivity; avoid in pregnancy; esophagitis—take with water, remain upright.", s:["bnf-doxy","nhs-doxy"]},
+  {g:"Cefalexin (Cephalexin)", c:"Antibiotic — Cephalosporin (1st gen)", i:"SSTI (cellulitis), UTI (alt.), pharyngitis", d:"250–500 mg PO every 6–8 h (or 500 mg every 12 h); usual max 4 g/day; 5–14 days per site.", w:"Penicillin cross‑reactivity (~1–2%); renal adjust.", s:["drugs-cephalexin","nhs-cefalexin"]},
+  {g:"Nitrofurantoin (MR 100 mg)", c:"Antibiotic — Urinary", i:"Uncomplicated cystitis (first‑line if eGFR ≥45)", d:"100 mg MR capsule PO every 12 h for 5 days (women) or 7 days (men/pregnancy per local policy).", w:"Avoid if eGFR <45; risk pulmonary/hepatic reactions (rare) with prolonged use.", s:["nhs-nitro","bnf-nitro","statpearls-nitro"]},
+  {g:"Trimethoprim/Sulfamethoxazole (160/800 mg)", c:"Antibiotic — Folate inhibitor", i:"UTI (if local resistance <20%), SSTI (MRSA alt.)", d:"1 DS tab (160/800) PO every 12 h for 3–5 days (UTI; duration per guideline).", w:"Hyperkalemia, allergy (sulfa), renal adjust; interactions (warfarin).", s:["drugs-tmp"]},
+
+  // CARDIOVASCULAR
+  {g:"Amlodipine", c:"Antihypertensive — CCB (DHP)", i:"Hypertension, chronic angina", d:"Start 5 mg PO daily (elderly/frail 2.5 mg); titrate q2–4 weeks; usual 5–10 mg daily.", w:"Ankle edema, flushing; safe in CKD; avoid in cardiogenic shock.", s:["bnf-amlodipine","nhs-amlodipine"]},
+  {g:"Losartan", c:"Antihypertensive — ARB", i:"Hypertension, diabetic nephropathy, HF (adj.)", d:"50 mg PO daily; titrate 25–100 mg/day based on response (max 100 mg/day).", w:"Monitor K⁺/creatinine; avoid in pregnancy; check for volume depletion.", s:["bnf-losartan","statpearls-losartan"]},
+  {g:"Valsartan", c:"Antihypertensive — ARB", i:"Hypertension, HF, post‑MI", d:"80 mg PO daily; titrate 80–320 mg daily; HF/post‑MI often divided BID per label.", w:"Monitor K⁺/creatinine; avoid in pregnancy.", s:["bnf-valsartan","nhs-valsartan"]},
+  {g:"Ramipril", c:"Antihypertensive — ACE inhibitor", i:"Hypertension, HF, post‑MI, nephroprotection", d:"Start 1.25–2.5 mg PO daily; uptitrate to 10 mg/day (in 1–2 doses).", w:"Cough, hyperkalemia, angioedema; avoid in pregnancy; check U&E after start/titration.", s:["bnf-ramipril","nhs-ramipril"]},
+  {g:"Hydrochlorothiazide", c:"Antihypertensive — Thiazide diuretic", i:"Hypertension, edema (less common vs thiazide‑like)", d:"12.5–25 mg PO daily; usual max 50 mg/day (higher doses ↑hypokalemia).", w:"Hyponatremia, hypokalemia; less effective if eGFR <30.", s:["bnf-hctz"]},
+  {g:"Metoprolol (succinate ER or tartrate)", c:"β‑Blocker", i:"Hypertension (2nd line), angina, rate control, HFrEF (ER)", d:"Succinate ER: start 25–100 mg daily; maintain 100–400 mg/day. Tartrate: often 50–100 mg BID; total 100–400 mg/day.", w:"Bradycardia, bronchospasm (asthma), mask hypoglycemia; do not stop abruptly.", s:["statpearls-metoprolol","bnf-metoprolol"]},
+  {g:"Atorvastatin", c:"Lipid‑lowering — Statin", i:"Primary/secondary ASCVD prevention", d:"Common start 20 mg nightly (adjust by risk); range 10–80 mg daily.", w:"Myalgia, ↑LFTs; interactions (e.g., macrolides, azoles).", s:["nice-statins"]},
+
+  // DIABETES (T2DM)
+  {g:"Metformin (IR/MR)", c:"Antidiabetic — Biguanide", i:"Type 2 diabetes (first‑line)", d:"IR titration: 500 mg daily → 500 mg BID → 500 mg TID; usual max 2 g/day. MR: 500 mg nightly → titrate to 2 g once daily with evening meal.", w:"GI upset (titrate slowly), B12 deficiency; review dose if eGFR <45; stop if eGFR <30.", s:["nhs-metformin","bnf-metformin"]},
+  {g:"Gliclazide", c:"Antidiabetic — Sulfonylurea", i:"Add‑on in T2DM", d:"Start 40–80 mg daily with breakfast; titrate; common maintenance 80–160 mg/day; **max 320 mg/day in divided doses**.", w:"Hypoglycemia, weight gain; caution in renal/hepatic impairment.", s:["bnf-gliclazide"]},
+  {g:"Sitagliptin", c:"Antidiabetic — DPP‑4 inhibitor", i:"Add‑on in T2DM (esp. if hypo risk)", d:"100 mg PO daily; **renal adjustment**: eGFR 30–45 → 50 mg daily; eGFR <30 or dialysis → 25 mg daily.", w:"Pancreatitis (rare); adjust in CKD; low hypo risk when monotherapy.", s:["fda-sitagliptin"]},
+
+  // RESPIRATORY / ALLERGY
+  {g:"Salbutamol (albuterol) MDI 100 mcg", c:"SABA inhaler", i:"Asthma/COPD symptom relief; EIB prevention", d:"1–2 puffs PRN (max 4 times/day). For prevention pre‑trigger: 2 puffs 15 min before.", w:"Overuse → poor control; tremor, tachycardia.", s:["nhs-salbutamol","gina-2024"]},
+  {g:"Budesonide/Formoterol (Symbicort 160/4.5)", c:"ICS/LABA inhaler", i:"Asthma control (maintenance ± reliever per GINA Track 1); COPD (maintenance)", d:"Typical maintenance: 2 puffs BID (max per label 160/4.5 two puffs BID). Anti‑inflammatory reliever per GINA per step.", w:"Rinse mouth; monitor for thrush; follow GINA steps.", s:["drugs-symbicort","gina-2024"]},
+  {g:"Montelukast", c:"Leukotriene receptor antagonist", i:"Allergic rhinitis, asthma add‑on, EIB", d:"10 mg PO once nightly (≥15 y).", w:"Neuropsychiatric effects (advise patient).", s:["nhs-montelukast"]},
+  {g:"Cetirizine", c:"Antihistamine (2nd gen)", i:"Allergic rhinitis, urticaria", d:"10 mg PO once daily.", w:"Dose reduce in CKD; sedation possible.", s:["nhs-cetirizine"]},
+  {g:"Loratadine", c:"Antihistamine (2nd gen)", i:"Allergic rhinitis, urticaria", d:"10 mg PO once daily.", w:"Generally non‑sedating; caution hepatic impairment.", s:["nhs-loratadine"]},
+
+  // GI
+  {g:"Omeprazole", c:"Proton pump inhibitor (PPI)", i:"Dyspepsia, GERD, PUD, H. pylori regimens", d:"20 mg PO once daily (GERD 4–8 wks); up to 40 mg/day if needed.", w:"Long‑term risks: hypomagnesemia, B12/iron malabsorption; taper if possible.", s:["nhs-omep"]},
+  {g:"Pantoprazole", c:"PPI", i:"GERD, erosive esophagitis, NSAID ulcer prevention", d:"20–40 mg PO once daily (GERD); erosive esophagitis 40 mg daily up to 8 wks.", w:"As for PPIs; take before food.", s:["nhs-panto"]},
+  {g:"Famotidine", c:"H2 receptor antagonist", i:"GERD, dyspepsia, ulcer", d:"20 mg PO twice daily **or** 40 mg at bedtime (typical adult regimens).", w:"Dose adjust in CKD.", s:["bnf-famot"]},
+  {g:"Loperamide", c:"Antimotility (antidiarrheal)", i:"Acute diarrhea (adults)", d:"4 mg initially, then 2 mg after each loose stool (max 16 mg/day).", w:"Avoid in bloody diarrhea/high fever; seek cause if >48–72 h.", s:["nhs-loperamide","patient-loperamide"]},
+  {g:"Ondansetron", c:"Antiemetic — 5‑HT3 antagonist", i:"Nausea/vomiting (CINV/PONV), gastroenteritis (symptomatic)", d:"Common PO adult regimens: 8 mg every 12 h (per indication). IV single dose max 16 mg due to QT risk.", w:"QT prolongation; constipation; avoid with congenital long QT.", s:["bnf-ondansetron","mhra-ondansetron"]},
+  {g:"Metoclopramide", c:"Antiemetic — prokinetic (D2 antagonist)", i:"N/V (short‑term), gastroparesis", d:"10 mg PO up to three times daily; **max 30 mg/day and ≤5 days**.", w:"Extrapyramidal effects; avoid with Parkinson’s; 6‑hour spacing.", s:["bnf-metoclopramide","nhs-metoclopramide","mhra-metoclopramide"]},
+
+  // ENDOCRINE / HEMATINICS / VITAMINS
+  {g:"Levothyroxine", c:"Thyroid hormone", i:"Hypothyroidism", d:"Common start 50–100 mcg PO daily (lower in elderly/CVD); usual maintenance 100–200 mcg/day; weight‑based ~1.6 mcg/kg/day in healthy adults.", w:"Take on empty stomach; separate from iron/calcium; titrate to TSH every 6–8 weeks.", s:["nhs-levothyroxine","statpearls-levothyroxine"]},
+  {g:"Ferrous sulfate (elemental Fe ~65 mg/tab 200 mg salt)", c:"Oral iron", i:"Iron‑deficiency anemia", d:"65 mg elemental iron PO 1–2 times daily (alternate‑day dosing often tolerated); continue 3 months after Hb normalization.", w:"GI upset/constipation; take separate from levothyroxine/PPIs; vitamin C may aid absorption.", s:["bnf-iron","nhs-ferrous"]},
+  {g:"Cholecalciferol (Vitamin D3)", c:"Vitamin — supplement", i:"Vitamin D deficiency / maintenance", d:"Loading options e.g., 50,000 IU weekly × 6 weeks (≈300,000 IU total) then maintenance 800–2000 IU daily (up to 4000 IU in select cases).", w:"Check 25‑OH D and calcium; caution in hypercalcemia, sarcoidosis.", s:["cks-vitd","cks-vitd-maint"]},
+];
+
+const classes = Array.from(new Set(drugs.map(d=>d.c))).sort();
+const chipState = new Set();
+
+function renderChips(){
+  const el=document.getElementById('chips');
+  el.innerHTML='';
+  classes.forEach(cls=>{
+    const c=document.createElement('button');
+    c.className='chip';
+    c.textContent=cls;
+    c.onclick=()=>{
+      if(chipState.has(cls)) chipState.delete(cls); else chipState.add(cls);
+      c.classList.toggle('on');
+      render();
+    };
+    el.appendChild(c);
+  });
+}
+
+function toHTML(d){
+  const srcLinks = d.s.map(k=>sources[k]).filter(Boolean).map(o=>`<a href="${o.u}" target="_blank" rel="noopener">${o.t}</a>`).join("<br/>");
+  return `
+  <div class="card" role="listitem" data-class="${d.c}">
+    <div>
+      <div class="g">${d.g}</div>
+      <div class="cls">${d.c}</div>
+      <div style="margin-top:8px">
+        <button class="copy" title="Copy dose" onclick='navigator.clipboard.writeText("${d.g}: ${d.d.replace(/"/g,"&quot;")}");this.textContent="Copied ✓";setTimeout(()=>this.textContent="Copy dose",1200)'>Copy dose</button>
+      </div>
+    </div>
+    <div><div class="muted">Indications</div><div class="ind">${d.i}</div></div>
+    <div><div class="muted">Typical adult dose</div><div class="dose">${d.d}</div></div>
+    <div><div class="muted">Key cautions</div><div class="warns">${d.w}</div></div>
+    <div class="src"><div class="muted">Evidence</div>${srcLinks}</div>
+  </div>`;
+}
+
+function render(){
+  const q = document.getElementById('q').value.toLowerCase().trim();
+  let list = drugs.filter(d=>{
+    const f = chipState.size? chipState.has(d.c): true;
+    if(!f) return false;
+    if(!q) return true;
+    const hay = (d.g+' '+d.c+' '+d.i+' '+d.d+' '+d.w).toLowerCase();
+    return hay.includes(q);
+  });
+  const grid=document.getElementById('grid');
+  grid.innerHTML = list.map(toHTML).join('');
+  document.querySelector('.count').textContent = list.length;
+}
+
+function renderRefs(){
+  const refs = document.getElementById('refs');
+  // order: KSA first, then groups
+  const orderedKeys = [
+    "sfda-eml-2023","who-eml",
+    "bnf-amlodipine","nhs-amlodipine","bnf-losartan","statpearls-losartan","bnf-valsartan","nhs-valsartan","bnf-ramipril","nhs-ramipril","statpearls-metoprolol","bnf-metoprolol","bnf-hctz","nice-statins",
+    "drugs-amoxicillin","drugs-augmentin","nhs-coamox","bnf-azith","fda-azith","nhs-azith","bnf-doxy","nhs-doxy","drugs-cephalexin","nhs-cefalexin","nhs-nitro","bnf-nitro","statpearls-nitro","drugs-tmp",
+    "nhs-salbutamol","drugs-symbicort","gina-2024","nhs-montelukast",
+    "nhs-paracetamol","nhs-ibuprofen","emc-ibuprofen","nhs-naproxen","bnf-naproxen",
+    "nhs-omep","nhs-panto","bnf-famot","nhs-loperamide","patient-loperamide","bnf-ondansetron","mhra-ondansetron","bnf-metoclopramide","nhs-metoclopramide","mhra-metoclopramide",
+    "nhs-cetirizine","nhs-loratadine",
+    "nhs-levothyroxine","statpearls-levothyroxine","bnf-iron","nhs-ferrous","cks-vitd","cks-vitd-maint"
+  ].filter(k=>sources[k]);
+  refs.innerHTML = orderedKeys.map(k=>{
+    const o = sources[k];
+    return `<p><a href="${o.u}" target="_blank" rel="noopener">${o.t}</a></p>`;
+  }).join("");
+}
+
+document.getElementById('q').addEventListener('input', render);
+document.getElementById('reset').addEventListener('click', ()=>{
+  document.getElementById('q').value='';
+  chipState.clear();
+  document.querySelectorAll('.chip.on').forEach(ch=>ch.classList.remove('on'));
+  render();
+});
+
+renderChips();
+render();
+renderRefs();
+document.getElementById('today').textContent = new Date().toLocaleDateString();
+</script>
 </body>
 </html>
